@@ -40,4 +40,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    // 總管人員
+    public function Staff()
+    {
+        return $this->hasOne('App\Models\Staff');
+    }
 }

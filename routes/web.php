@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\StaffController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,26 @@ use App\Http\Controllers\LoginController;
 Route::get('/', function () {
     return view('welcome');
 });
+
+// 總管後台 - 總管人員模組
+Route::prefix('admin')->group(function () {
+    // a0001 總管人員頁
+    Route::get('staffs', [StaffController::class, 'StaffsPage'])->name('StaffsPage');
+    // a0002 新增總管人員頁
+    Route::get('staffs/create', [StaffController::class, 'CreateStaffPage'])->name('CreateStaffPage');
+    // a0003 新增總管人員
+    Route::post('staffs/create', [StaffController::class, 'CreateStaff'])->name('CreateStaff');
+    // a0004 總管人員單頁
+    Route::get('staffs/{staff_id}', [StaffController::class, 'StaffPage'])->name('StaffPage');
+    // a0005 停用總管人員
+    Route::put('staffs/{staff_id}/disable',  [StaffController::class, 'DisableStaff'])->name('DisableStaff');
+    // a0006 編輯總管人員頁
+    Route::get('staffs/{staff_id}/edit', [StaffController::class, 'EditStaffPage'])->name('EditStaffPage');
+    // a0007 修改總管人員資料
+    Route::put('staffs/{staff_id}/edit',  [StaffController::class, 'EditStaff'])->name('EditStaff');
+
+});
+
 
 
 Route::get('register', [LoginController::class, 'signup']); 

@@ -21,9 +21,9 @@ class LoginController extends Controller
     
     public function authenticate(Request $request)
     {
-        $credentials = $request->only('username', 'password');
+        $credentials = $request->only('email', 'password');
 
-        if (Auth::attempt(['name'=> $credentials['username'], 'password'=>$credentials['password'] ])) {
+        if (Auth::attempt(['email'=> $credentials['email'], 'password'=>$credentials['password'] ])) {
             // 认证通过．．．
             return "pass";
         }else{

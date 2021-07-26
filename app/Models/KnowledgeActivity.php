@@ -11,14 +11,14 @@ class KnowledgeActivity extends Model
     /**
      * 新增人
      */
-    public function CreatedMember()
+    public function CreatedStaff()
     {
         return $this->belongsTo('App\Models\Staff', 'created_staff_id');
     }
     /**
      * 更改人
      */
-    public function UpdatedMember()
+    public function UpdatedStaff()
     {
         return $this->belongsTo('App\Models\Staff', 'updated_staff_id');
     }
