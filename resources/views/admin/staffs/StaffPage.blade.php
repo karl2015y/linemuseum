@@ -96,38 +96,8 @@
 </div>
 
 
-{{-- 封存總管人員 --}}
-<div id="modal-id" style="z-index: 60000"
-    class="hidden min-w-screen h-screen animated fadeIn faster  fixed  left-0 top-0 flex justify-center items-center inset-0 outline-none focus:outline-none bg-no-repeat bg-center bg-cover">
-    <div class="absolute bg-black opacity-80 inset-0 z-0"></div>
-    <div class="w-full  max-w-lg p-5 relative mx-auto my-auto rounded-xl shadow-lg  bg-white ">
-        <!--content-->
-        <div class="">
-            <!--body-->
-            <div class="text-center p-5 flex-auto justify-center">
-                <svg class="w-16 h-16 flex items-center text-yellow-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                <h2 class="text-xl font-bold py-4 ">是否封存該總管人員</h3>
-                    <p class="text-sm text-gray-500 px-8">封存後該人員及無法登入與執行各項業務</p>
-            </div>
-            <!--footer-->
-            <div class="p-3  mt-2 text-center space-x-4 md:block">
-                <button id="disable-staff-modal-close"
-                    class="mb-2 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-full hover:shadow-lg hover:bg-gray-100">
-                    取消
-                </button>
-                <form class="inline-block" action="{{route('DisableStaff', ['staff_id'=>$staff['id'] ])}}" method="post">
-                    @csrf
-                    @method('PUT')
-                    <button
-                        class="mb-2 md:mb-0 bg-yellow-500 border border-yellow-500 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded-full hover:shadow-lg hover:bg-yellow-600">
-                        確定封存
-                    </button> 
-                </form>
-        
-            </div>
-        </div>
-    </div>
-</div>
+
+
 
 
 
@@ -138,11 +108,16 @@
 
 {{-- 控制封存modal的開關 --}}
 <script type="text/javascript">
-    document.querySelector('#disable-staff-modal-open').addEventListener('click',()=>{
-    document.querySelector("#modal-id").classList.remove('hidden')
-})
-document.querySelector('#disable-staff-modal-close').addEventListener('click',()=>{
-    document.querySelector("#modal-id").classList.add('hidden')
-})
+
+</script>
+
+
+
+
+<script>
+
+
+window.buttonBindModal('disable-staff-modal-open', '@csrf', 'disable', "是否封存該總管人員", "封存後該人員及無法登入與執行各項業務", "{{route('DisableStaff', ['staff_id'=>$staff['id'] ])}}")
+
 </script>
 @stop

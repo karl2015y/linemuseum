@@ -251,3 +251,68 @@ const getUrlParameter=(name) => {
     return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
 };
 window.getUrlParameter = getUrlParameter;
+
+
+// modal 
+const buttonBindModal = (buttonId, csrf, type, title, content, route)=>{
+    const createModal = (csrf, type, title, content, route)=>{
+        var template = document.createElement('template');
+        const methods = {
+            'confirm':"",
+            'delete':'<input type="hidden" name="_method" value="DElete"/>',
+            'disable':'<input type="hidden" name="_method" value="PUT"/>',
+        }
+        const icon_colors = {
+            'confirm':'green-500',
+            'delete':'red-500',
+            'disable':'yellow-500',
+        }
+        const icons = {
+            'confirm':'<svg class="w-16 h-16 flex items-center mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>',
+            'delete':'<svg class="w-16 h-16 flex items-center mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>',
+            'disable':'<svg class="w-16 h-16 flex items-center mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>'
+        }
+        template.innerHTML = `<div id="modal-id" style="z-index: 60000"
+            class="min-w-screen h-screen animated fadeIn faster  fixed  left-0 top-0 flex justify-center items-center inset-0 outline-none focus:outline-none bg-no-repeat bg-center bg-cover">
+            <div class="absolute bg-black opacity-80 inset-0 z-0"></div>
+            <div class="w-full  max-w-lg p-5 relative mx-auto my-auto rounded-xl shadow-lg  bg-white ">
+                <!--content-->
+                <div class="">
+                    <!--body-->
+                    <div class="text-center p-5 flex-auto justify-center">
+                        <span class="text-${icon_colors[type]}">
+                            ${icons[type]}
+                        </span>
+                        <h2 class="text-xl font-bold py-4 ">${title}</h3>
+                            <p class="text-sm text-gray-500 px-8">${content}</p>
+                    </div>
+                    <!--footer-->
+                    <div class="p-3  mt-2 text-center space-x-4 md:block">
+                        <button id="modal-close"
+                            class="mb-2 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-full hover:shadow-lg hover:bg-gray-100">
+                            取消
+                        </button>
+                        <form class="inline-block" action="${route}" method="post">
+                            ${csrf}
+                            ${methods[type]}
+                            <button
+                                class="mb-2 md:mb-0 bg-${icon_colors[type]} border border-${icon_colors[type]} px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded-full hover:shadow-lg hover:bg-yellow-600">
+                                確定
+                            </button> 
+                        </form>
+                
+                    </div>
+                </div>
+            </div>
+        </div>`
+        const ele = document.body.appendChild(template.content.firstElementChild);
+        ele.querySelector('#modal-close').addEventListener('click',()=>{
+            document.querySelector("#modal-id").remove()
+        })
+        
+    }
+    document.querySelector(`#${buttonId}`).addEventListener('click',()=>{
+        createModal(csrf, type, title, content, route)
+    })
+}
+window.buttonBindModal = buttonBindModal;
