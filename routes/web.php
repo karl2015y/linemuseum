@@ -40,9 +40,6 @@ Route::prefix('admin')->group(function () {
         // a0007 修改總管人員資料
         Route::put('/{staff_id}/edit',  [StaffController::class, 'EditStaff'])->name('EditStaff');
     });
-
-
-
     // MuseumController
     Route::prefix('museums')->group(function () {
         // e0001 館舍列表頁
@@ -56,12 +53,15 @@ Route::prefix('admin')->group(function () {
         // e0005 封存館舍
         Route::put('/{museum_id}/disable',  [MuseumController::class, 'DisableMuseum'])->name('DisableMuseum');
         // e0006 刪除館舍
-        Route::get('/{museum_id}/delete', [MuseumController::class, 'DeleteMuseum'])->name('DeleteMuseum');
+        Route::delete('/{museum_id}/delete', [MuseumController::class, 'DeleteMuseum'])->name('DeleteMuseum');
         // e0007 編輯館舍頁
         Route::get('/{museum_id}/edit', [MuseumController::class, 'EditMuseumPage'])->name('EditMuseumPage');
         // e0008 編輯館舍
         Route::put('/{museum_id}/edit',  [MuseumController::class, 'EditMuseum'])->name('EditMuseum');
+        
     });
+
+    
 
 });
 

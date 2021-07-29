@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Museum extends Model
 {
     use HasFactory;
+    protected $guarded = [];
     /**
      * 新增人
      */
