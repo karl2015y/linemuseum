@@ -263,9 +263,9 @@ const buttonBindModal = (buttonId, csrf, type, title, content, route)=>{
             'disable':'<input type="hidden" name="_method" value="PUT"/>',
         }
         const icon_colors = {
-            'confirm':'green-500',
-            'delete':'red-500',
-            'disable':'yellow-500',
+            'confirm':'green',
+            'delete':'red',
+            'disable':'yellow',
         }
         const icons = {
             'confirm':'<svg class="w-16 h-16 flex items-center mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>',
@@ -280,7 +280,7 @@ const buttonBindModal = (buttonId, csrf, type, title, content, route)=>{
                 <div class="">
                     <!--body-->
                     <div class="text-center p-5 flex-auto justify-center">
-                        <span class="text-${icon_colors[type]}">
+                        <span class="text-${icon_colors[type]}-500">
                             ${icons[type]}
                         </span>
                         <h2 class="text-xl font-bold py-4 ">${title}</h3>
@@ -296,7 +296,7 @@ const buttonBindModal = (buttonId, csrf, type, title, content, route)=>{
                             ${csrf}
                             ${methods[type]}
                             <button
-                                class="mb-2 md:mb-0 bg-${icon_colors[type]} border border-${icon_colors[type]} px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded-full hover:shadow-lg hover:bg-yellow-600">
+                                class="mb-2 md:mb-0 bg-${icon_colors[type]}-500 border border-${icon_colors[type]}-500 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded-full hover:shadow-lg hover:bg-${icon_colors[type]}-600">
                                 確定
                             </button> 
                         </form>
