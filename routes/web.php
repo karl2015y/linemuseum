@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\MuseumController;
+use App\Http\Controllers\ShopController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,10 +59,30 @@ Route::prefix('admin')->group(function () {
         Route::get('/{museum_id}/edit', [MuseumController::class, 'EditMuseumPage'])->name('EditMuseumPage');
         // e0008 編輯館舍
         Route::put('/{museum_id}/edit',  [MuseumController::class, 'EditMuseum'])->name('EditMuseum');
+
+        // ShopController
+        Route::prefix('/{museum_id}/shops')->group(function () {
+            // e1001 商家列表頁
+            Route::get('/', [ShopController::class, 'ShopsPage'])->name('ShopsPage');
+            // e1002 新增商家頁
+            Route::get('/create', [ShopController::class, 'CreateShopPage'])->name('CreateShopPage');
+            // e1003 新增商家
+            Route::post('/create', [ShopController::class, 'CreateShop'])->name('CreateShop');
+            // e1004 商家單頁
+            Route::get('/{shop_id}', [ShopController::class, 'ShopPage'])->name('ShopPage');
+            // e1005 封存商家
+            Route::put('/{shop_id}/disable',  [ShopController::class, 'DisableShop'])->name('DisableShop');
+            // e1006 刪除商家
+            Route::delete('/{shop_id}/delete', [ShopController::class, 'DeleteShop'])->name('DeleteShop');
+            // e1007 編輯商家頁
+            Route::get('/{shop_id}/edit', [ShopController::class, 'EditShopPage'])->name('EditShopPage');
+            // e1008 編輯商家
+            Route::put('/{shop_id}/edit',  [ShopController::class, 'EditShop'])->name('EditShop');
+        });
         
     });
 
-    
+
 
 });
 
