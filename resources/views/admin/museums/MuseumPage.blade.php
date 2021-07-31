@@ -64,7 +64,7 @@
                 @endif
             </p>
             <div class="text-center md:text-right">
-                <a href="{{route('ShopsPage', ['museum_id'=>$museum->id ])}}">
+                <a href="{{route('KnowledgeActivitiesPage', ['museum_id'=>$museum->id ])}}">
                     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 rounded w-full  md:w-1/2">
                         知識點活動列表
                     </button>
