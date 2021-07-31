@@ -8,6 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class KnowledgeActivity extends Model
 {
     use HasFactory;
+    protected $guarded = [];
+
+    protected $dates = [
+        'start_at',
+        'end_at',
+    ];
     /**
      * 新增人
      */
