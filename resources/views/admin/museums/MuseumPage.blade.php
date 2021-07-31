@@ -40,7 +40,7 @@
 </div>
 
 {{-- 個人訊息 --}}
-<div class="max-w-4xl  bg-white w-full rounded-lg shadow-xl">
+<div class="bg-white w-full rounded-lg shadow-xl">
     <div class="p-4 border-b md:flex justify-between">
         <h2 class="text-2xl ">館舍詳細資料</h2>
         <div>
@@ -64,12 +64,12 @@
                 @endif
             </p>
             <div class="text-center md:text-right">
-                <a href="{{route('EditMuseumPage', ['museum_id'=>$museum->id ])}}">
+                <a href="{{route('ShopsPage', ['museum_id'=>$museum->id ])}}">
                     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 rounded w-full  md:w-1/2">
                         知識點活動列表
                     </button>
                 </a>
-                <a href="{{route('EditMuseumPage', ['museum_id'=>$museum->id ])}}">
+                <a href="{{route('ShopsPage', ['museum_id'=>$museum->id ])}}">
                     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 rounded w-full mt-1 md:w-2/5">
                         商店列表
                     </button>

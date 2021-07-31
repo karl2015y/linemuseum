@@ -36,7 +36,7 @@
 </div>
 
 {{-- 個人訊息 --}}
-<div class="max-w-4xl  bg-white w-full rounded-lg shadow-xl">
+<div class="bg-white w-full rounded-lg shadow-xl">
     <div class="p-4 border-b flex justify-between">
         <h2 class="text-2xl ">
             總館人員詳細資料

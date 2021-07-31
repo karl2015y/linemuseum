@@ -311,8 +311,10 @@ const buttonBindModal = (buttonId, csrf, type, title, content, route)=>{
         })
         
     }
-    document.querySelector(`#${buttonId}`).addEventListener('click',()=>{
-        createModal(csrf, type, title, content, route)
-    })
+    if(document.querySelector(`#${buttonId}`)){
+        document.querySelector(`#${buttonId}`).addEventListener('click',()=>{
+            createModal(csrf, type, title, content, route)
+        })
+    }
 }
 window.buttonBindModal = buttonBindModal;

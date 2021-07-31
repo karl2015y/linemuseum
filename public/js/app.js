@@ -2392,9 +2392,11 @@ var buttonBindModal = function buttonBindModal(buttonId, csrf, type, title, cont
     });
   };
 
-  document.querySelector("#".concat(buttonId)).addEventListener('click', function () {
-    createModal(csrf, type, title, content, route);
-  });
+  if (document.querySelector("#".concat(buttonId))) {
+    document.querySelector("#".concat(buttonId)).addEventListener('click', function () {
+      createModal(csrf, type, title, content, route);
+    });
+  }
 };
 
 window.buttonBindModal = buttonBindModal;
