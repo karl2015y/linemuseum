@@ -28,9 +28,9 @@ class CreateShopsTable extends Migration
             //商家簡介
             $table->text('description')->nullable();
             //建立的總管人員id
-            $table->foreignId('created_staff_id')->references('id')->on('staff')->nullable();
+            $table->foreignId('created_staff_id')->nullable();
             //更新的總管人員id
-            $table->foreignId('updated_staff_id')->references('id')->on('staff')->nullable();
+            $table->foreignId('updated_staff_id')->nullable();
 
             $table->timestamps();
         });
