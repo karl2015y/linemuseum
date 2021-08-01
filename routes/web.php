@@ -6,7 +6,9 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\MuseumController;
 use App\Http\Controllers\ShopController;
-
+use App\Http\Controllers\KnowledgeActivityController;
+use App\Http\Controllers\VoucherController;
+use App\Http\Controllers\CropController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -53,7 +55,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/{museum_id}', [MuseumController::class, 'MuseumPage'])->name('MuseumPage');
         // e0005 封存館舍
         Route::put('/{museum_id}/disable',  [MuseumController::class, 'DisableMuseum'])->name('DisableMuseum');
-        // e0006 刪除館舍
+        // TODO e0006 刪除館舍
         Route::delete('/{museum_id}/delete', [MuseumController::class, 'DeleteMuseum'])->name('DeleteMuseum');
         // e0007 編輯館舍頁
         Route::get('/{museum_id}/edit', [MuseumController::class, 'EditMuseumPage'])->name('EditMuseumPage');
@@ -78,10 +80,66 @@ Route::prefix('admin')->group(function () {
             Route::get('/{shop_id}/edit', [ShopController::class, 'EditShopPage'])->name('EditShopPage');
             // e1008 編輯商家
             Route::put('/{shop_id}/edit',  [ShopController::class, 'EditShop'])->name('EditShop');
+            // TODO e1009 消費紀錄列表頁 
+            Route::get('/{shop_id}/history', [ShopController::class, 'ShopsHistoryPage'])->name('ShopsHistoryPage');
+        });
+        // KnowledgeActivityController
+        Route::prefix('/{museum_id}/kas')->group(function () {
+            // e1001 知識點活動列表頁
+            Route::get('/', [KnowledgeActivityController::class, 'KnowledgeActivitiesPage'])->name('KnowledgeActivitiesPage');
+            // e1002 新增知識點活動頁
+            Route::get('/create', [KnowledgeActivityController::class, 'CreateKnowledgeActivityPage'])->name('CreateKnowledgeActivityPage');
+            // e1003 新增知識點活動
+            Route::post('/create', [KnowledgeActivityController::class, 'CreateKnowledgeActivity'])->name('CreateKnowledgeActivity');
+            // e1004 知識點活動單頁
+            Route::get('/{ka_id}', [KnowledgeActivityController::class, 'KnowledgeActivityPage'])->name('KnowledgeActivityPage');
+            // e1005 封存知識點活動
+            Route::put('/{ka_id}/disable',  [KnowledgeActivityController::class, 'DisableKnowledgeActivity'])->name('DisableKnowledgeActivity');
+            // e1006 刪除知識點活動
+            Route::delete('/{ka_id}/delete', [KnowledgeActivityController::class, 'DeleteKnowledgeActivity'])->name('DeleteKnowledgeActivity');
+            // e1007 編輯知識點活動頁
+            Route::get('/{ka_id}/edit', [KnowledgeActivityController::class, 'EditKnowledgeActivityPage'])->name('EditKnowledgeActivityPage');
+            // e1008 編輯知識點活動
+            Route::put('/{ka_id}/edit',  [KnowledgeActivityController::class, 'EditKnowledgeActivity'])->name('EditKnowledgeActivity');
+            // TODO e1009 知識點紀錄列表頁 
+            Route::get('/{ka_id}/history', [KnowledgeActivityController::class, 'KnowledgeActivityHistoryPage'])->name('KnowledgeActivityHistoryPage');
         });
         
     });
 
+    // VoucherController
+    Route::prefix('vouchers')->group(function () {
+        // b0001 兌換券列表頁
+        Route::get('/', [VoucherController::class, 'VouchersPage'])->name('VouchersPage');
+        // b0002 新增兌換券頁
+        Route::get('/create', [VoucherController::class, 'CreateVoucherPage'])->name('CreateVoucherPage');
+        // b0003 新增兌換券
+        Route::post('/create', [VoucherController::class, 'CreateVoucher'])->name('CreateVoucher');
+        // b0003.5 新增兌換券圖片
+        Route::get('/{voucher_id}/pics', [VoucherController::class, 'CreateVoucherPicsPage'])->name('CreateVoucherPicsPage');
+        // b0004 新增兌換券的購買方式頁
+        Route::get('/{voucher_id}/buyway/create', [VoucherController::class, 'CreateBuyVoucherWayPage'])->name('CreateBuyVoucherWayPage');
+        // b0005 新增兌換券的購買方式
+        Route::post('/{voucher_id}/buyway/create', [VoucherController::class, 'CreateBuyVoucherWay'])->name('CreateBuyVoucherWay');
+        // b0006 刪除兌換券的購買方式
+        Route::delete('/{voucher_id}/buyway/{voucher_way_id}/delete', [VoucherController::class, 'DeleteBuyVoucherWay'])->name('DeleteBuyVoucherWay');
+        // b0007 兌換券單頁
+        Route::get('/{voucher_id}', [VoucherController::class, 'VucherPage'])->name('VucherPage');
+        // b0008 封存兌換券
+        Route::put('/{voucher_id}/disable',  [VoucherController::class, 'DisableVucher'])->name('DisableVucher');
+        // b0009 刪除兌換券
+        Route::delete('/{voucher_id}/delete', [VoucherController::class, 'DeleteVucher'])->name('DeleteVucher');
+
+    });
+
+
+
+    // CropController
+    Route::prefix('pics')->group(function () {
+        Route::get('/',  [CropController::class, 'home'])->name('picuploadPage');
+        Route::post('upload',  [CropController::class, 'postUpload'])->name('picupload');
+        Route::post('crop',  [CropController::class, 'postCrop'])->name('piccrop');
+    });
 
 
 });

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class VoucherWay extends Model
 {
+    protected $guarded = [];
     use HasFactory;
     /**
      * 所屬兌換券
