@@ -83,7 +83,7 @@ class KnowledgeActivityController extends Controller
             'description' =>  $validatedData['description'],
         ]);
         if($request->user() && $request->user()->Staff){
-            $shop['created_staff_id'] = $request->user()->Staff->id;
+            $ka['created_staff_id'] = $request->user()->Staff->id;
         }
         $ka->save();
         $message_title = "新增成功";
