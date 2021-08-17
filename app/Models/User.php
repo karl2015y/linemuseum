@@ -45,4 +45,9 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Models\Staff');
     }
+    // 民眾
+    public function Member()
+    {
+        return $this->hasOne('App\Models\Member');
+    }
 }

@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class VoucherRecordStatus extends Model
 {
     use HasFactory;
+    protected $guarded = [];
+
     /**
      * 所屬兌換券紀錄
     */

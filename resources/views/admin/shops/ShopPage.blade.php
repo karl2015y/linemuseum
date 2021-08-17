@@ -66,7 +66,7 @@
                 @endif
             </p>
             <div class="text-center md:text-right">
-                <a href="{{route('ShopsPage', ['museum_id'=>$museum->id ])}}">
+                <a href="{{route('ShopsHistoryPage', ['museum_id'=>$museum->id, 'shop_id'=>$shop->id ])}}">
                     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 rounded w-full ">
                         消費紀錄列表
                     </button>

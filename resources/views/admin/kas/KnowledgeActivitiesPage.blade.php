@@ -17,7 +17,8 @@
       <li class="px-2">/</li>
       <li><a href="#" class="no-underline text-blue-600">Library</a></li>
       <li class="px-2">/</li> --}}
-      <li><a href="{{route('MuseumPage', ['museum_id'=>$museum->id])}}" class="no-underline text-blue-600">{{$museum['name']}}</a></li>
+      <li><a href="{{route('MuseumPage', ['museum_id'=>$museum->id])}}"
+          class="no-underline text-blue-600">{{$museum['name']}}</a></li>
       <li class="px-2">/</li>
       <li class="text-gray-400">知識點活動列表頁</li>
     </ol>
@@ -37,7 +38,7 @@
 
 {{-- 篩選器 --}}
 <style>
-  input[name=status]:checked~.radio {
+  input[type=radio]:checked~.radio {
     color: white;
     background-color: rgba(59, 130, 246, 1);
     --tw-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
@@ -47,20 +48,46 @@
 </style>
 <form action="" method="get">
   <input class="hidden" id="changeTableStatus" type="submit" value="">
-  <div class="flex text-sm">
-    <div class="inline-flex ">
-      <input type="radio" name="status" value="OnlyEnable" id="OnlyEnable" hidden />
-      <label for="OnlyEnable"
-        class="rounded-l-lg  border border-double border-r-0 border-gray-300 radio text-center self-center py-1 px-4  cursor-pointer hover:opacity-75">
-        不顯示封存
-      </label>
+  <div class="flex justify-between">
+    <div class="flex text-sm">
+      <div class="inline-flex ">
+        <input type="radio" name="status" value="OnlyEnable" id="OnlyEnable" hidden />
+        <label for="OnlyEnable"
+          class="rounded-l-lg  border border-double border-r-0 border-gray-300 radio text-center self-center py-1 px-4  cursor-pointer hover:opacity-75">
+          不顯示封存
+        </label>
+      </div>
+      <div class="inline-flex ">
+        <input type="radio" name="status" value="ShowDisable" id="ShowDisable" hidden />
+        <label for="ShowDisable"
+          class="rounded-r-lg border border-double border-l-0 border-gray-300 radio text-center self-center py-1 px-4  cursor-pointer hover:opacity-75">
+          顯示封存
+        </label>
+      </div>
     </div>
-    <div class="inline-flex ">
-      <input type="radio" name="status" value="ShowDisable" id="ShowDisable" hidden />
-      <label for="ShowDisable"
-        class="rounded-r-lg border border-double border-l-0 border-gray-300 radio text-center self-center py-1 px-4  cursor-pointer hover:opacity-75">
-        顯示封存
-      </label>
+
+    <div class="flex text-sm">
+      <div class="inline-flex ">
+        <input type="radio" name="timeline" value="ing" id="ing" hidden />
+        <label for="ing"
+          class="rounded-l-lg  border border-double border-r-0 border-gray-300 radio text-center self-center py-1 px-4  cursor-pointer hover:opacity-75">
+          已開始
+        </label>
+      </div>
+      <div class="inline-flex ">
+        <input type="radio" name="timeline" value="will" id="will" hidden />
+        <label for="will"
+          class="border border-double border-l-0 border-gray-300 radio text-center self-center py-1 px-4  cursor-pointer hover:opacity-75">
+          未開始
+        </label>
+      </div>
+      <div class="inline-flex ">
+        <input type="radio" name="timeline" value="done" id="done" hidden />
+        <label for="done"
+          class="rounded-r-lg border border-double border-l-0 border-gray-300 radio text-center self-center py-1 px-4  cursor-pointer hover:opacity-75">
+          已結束
+        </label>
+      </div>
     </div>
   </div>
 </form>
@@ -122,7 +149,8 @@
       </td>
       {{-- 操作 --}}
       <td class="p-3 text-center">
-        <a href="{{route('KnowledgeActivityPage', ['museum_id'=>$museum->id,'ka_id'=>$ka->id ])}}" class="text-gray-800 hover:text-gray-400 mr-2">
+        <a href="{{route('KnowledgeActivityPage', ['museum_id'=>$museum->id,'ka_id'=>$ka->id ])}}"
+          class="text-gray-800 hover:text-gray-400 mr-2">
           <i class="material-icons-outlined text-base">visibility</i>
         </a>
       </td>
@@ -163,7 +191,14 @@
 @section('JS-content')
 
 <script type="text/javascript">
-// 檢查URL的Query是否包含ShowDisable，是就要切過去
+const bindRadio = (dom)=>{
+  dom.addEventListener("click",()=>{
+  setTimeout(() => {
+    document.querySelector("#changeTableStatus").click()
+  }, 100);
+})
+}
+  // 檢查URL的Query是否包含ShowDisable，是就要切過去
 const ShowDisable = document.querySelector("form input#ShowDisable").parentElement.querySelector("label")
 const OnlyEnable = document.querySelector("form input#OnlyEnable").parentElement.querySelector("label")
 if(getUrlParameter("status")=='ShowDisable'){
@@ -171,18 +206,25 @@ if(getUrlParameter("status")=='ShowDisable'){
 }else{
   OnlyEnable.click()
 }
-ShowDisable.addEventListener("click",()=>{
-  setTimeout(() => {
-    document.querySelector("#changeTableStatus").click()
-  }, 100);
-})
-OnlyEnable.addEventListener("click",()=>{
-  setTimeout(() => {
-    document.querySelector("#changeTableStatus").click()
-  }, 100);
-})
+bindRadio(ShowDisable)
+bindRadio(OnlyEnable)
+
+const radio_ing = document.querySelector("form input#ing").parentElement.querySelector("label")
+const radio_will = document.querySelector("form input#will").parentElement.querySelector("label")
+const radio_done = document.querySelector("form input#done").parentElement.querySelector("label")
+
+const timelineClick = {
+  '' : radio_ing,
+  'ing' : radio_ing,
+  'will' : radio_will,
+  'done' : radio_done,
+}
+timelineClick[getUrlParameter("timeline")].click()
+
+bindRadio(radio_ing)
+bindRadio(radio_will)
+bindRadio(radio_done)
+
 
 </script>
 @stop
-
-

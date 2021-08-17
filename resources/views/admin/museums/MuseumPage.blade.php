@@ -70,7 +70,8 @@
                     </button>
                 </a>
                 <a href="{{route('ShopsPage', ['museum_id'=>$museum->id ])}}">
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 rounded w-full mt-1 md:w-2/5">
+                    <button
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 rounded w-full mt-1 md:w-2/5">
                         商店列表
                     </button>
                 </a>
@@ -140,7 +141,6 @@
     </div>
 
 
-</div>
 </div>
 
 

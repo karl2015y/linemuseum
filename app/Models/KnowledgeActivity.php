@@ -42,5 +42,22 @@ class KnowledgeActivity extends Model
     {
         return $this->hasMany('App\Models\KnowledgePointRecord','knowledge_activity_id');
     }
+    /**
+     * 取得知識點活動下的最新紀錄
+     */
+    public function SomeMemberLatestKnowledgeActivityRecord($member_id)
+    {
+        return $this->hasOne('App\Models\KnowledgePointRecord','knowledge_activity_id')->where('member_id',$member_id)->latest()->first();
+    }
+
+
+
+    /**
+     * 取得知識點活動的Qrcode
+     */
+    public function Qrcode()
+    {
+        return $this->hasOne('App\Models\Qrcode','ka_id');
+    }
 
 }

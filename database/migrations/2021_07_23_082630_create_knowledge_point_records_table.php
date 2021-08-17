@@ -17,7 +17,7 @@ class CreateKnowledgePointRecordsTable extends Migration
             $table->id();
 
             //知識點活動id
-            $table->foreignId('knowledge_activity_id')->references('id')->on('knowledge_activities');
+            $table->foreignId('knowledge_activity_id')->nullable();
             //活動名稱
             $table->string('knowledge_activity_name');
             //民眾id

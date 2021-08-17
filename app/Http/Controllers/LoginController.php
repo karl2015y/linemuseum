@@ -24,8 +24,8 @@ class LoginController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt(['email'=> $credentials['email'], 'password'=>$credentials['password'] ])) {
-            // 认证通过．．．
-            return "pass";
+            // User::where('email', $credentials['email'])->get();
+            return User::where('email', $credentials['email'])->with('Member')->first();
         }else{
             return "no";
         }

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class PayPointRecord extends Model
 {
     use HasFactory;
+    protected $guarded = [];
     /**
      * 取得所屬商家
      */
@@ -23,13 +24,11 @@ class PayPointRecord extends Model
         return $this->belongsTo('App\Models\Member');
     }
     /**
-     * 館舍名稱
+     * 取得知識點活動的Qrcode
      */
-    public function Museum()
+    public function Qrcode()
     {
-        // https://stackoverflow.com/questions/23365905/laravel-hasmanythrough-equivalent-belongsto-relationship-through-another-model
-        // return $this->hasOneThrough('App\Models\Museum', 'App\Models\Shop', 'id', 'id', 'shop_id', 'museum_id');
-        return $this->Shop->Museum;
+        return $this->hasOne('App\Models\Qrcode','ppr_id');
     }
 
 }

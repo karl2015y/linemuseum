@@ -9,6 +9,9 @@ use App\Http\Controllers\ShopController;
 use App\Http\Controllers\KnowledgeActivityController;
 use App\Http\Controllers\VoucherController;
 use App\Http\Controllers\CropController;
+use App\Http\Controllers\DataController;
+use App\Http\Controllers\PointController;
+use App\Http\Controllers\SettingController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,6 +29,9 @@ Route::get('/', function () {
 
 // 總管後台 - 總管人員模組
 Route::prefix('admin')->group(function () {
+    Route::get('/setting', [SettingController::class, 'setConfigPage'])->name('setConfigPage');
+    Route::post('/setting', [SettingController::class, 'setConfig'])->name('setConfig');
+
     // StaffController
     Route::prefix('staffs')->group(function () {
         // a0001 總管人員頁
@@ -42,6 +48,14 @@ Route::prefix('admin')->group(function () {
         Route::get('/{staff_id}/edit', [StaffController::class, 'EditStaffPage'])->name('EditStaffPage');
         // a0007 修改總管人員資料
         Route::put('/{staff_id}/edit',  [StaffController::class, 'EditStaff'])->name('EditStaff');
+    });
+
+    // PointController
+    Route::prefix('members')->group(function () {
+        // c0001 民眾給點列表頁
+        Route::get('/', [PointController::class, 'giveMemberPointPage'])->name('giveMemberPointPage');
+        Route::get('/{member_id}', [PointController::class, 'memberPointHistoryPage'])->name('memberPointHistoryPage');
+        Route::post('/{member_id}', [PointController::class, 'memberGivePoint'])->name('memberGivePoint');
     });
     // MuseumController
     Route::prefix('museums')->group(function () {
@@ -103,10 +117,9 @@ Route::prefix('admin')->group(function () {
             Route::put('/{ka_id}/edit',  [KnowledgeActivityController::class, 'EditKnowledgeActivity'])->name('EditKnowledgeActivity');
             // TODO e1009 知識點紀錄列表頁 
             Route::get('/{ka_id}/history', [KnowledgeActivityController::class, 'KnowledgeActivityHistoryPage'])->name('KnowledgeActivityHistoryPage');
-        });
-        
-    });
 
+        });
+    });
     // VoucherController
     Route::prefix('vouchers')->group(function () {
         // b0001 兌換券列表頁
@@ -129,24 +142,38 @@ Route::prefix('admin')->group(function () {
         Route::put('/{voucher_id}/disable',  [VoucherController::class, 'DisableVucher'])->name('DisableVucher');
         // b0009 刪除兌換券
         Route::delete('/{voucher_id}/delete', [VoucherController::class, 'DeleteVucher'])->name('DeleteVucher');
-
     });
-
-
-
     // CropController
     Route::prefix('pics')->group(function () {
         Route::get('/',  [CropController::class, 'home'])->name('picuploadPage');
         Route::post('upload',  [CropController::class, 'postUpload'])->name('picupload');
         Route::post('crop',  [CropController::class, 'postCrop'])->name('piccrop');
     });
-
-
+    // DataController
+    Route::prefix('datas')->group(function () {
+        // d0001 民眾基本列表頁
+        Route::get('/members',  [DataController::class, 'MembersPage'])->name('MembersPage');
+        // d0002 匯出民眾基本列表
+        Route::get('/members/export',  [DataController::class, 'MembersExport'])->name('MembersExport');
+        // d0003 兌換券記錄列表頁
+        Route::get('/vouchers',  [DataController::class, 'VouchersHistoryPage'])->name('VouchersHistoryPage');
+        // d0004 匯出兌換券記錄列表
+        Route::get('/vouchers/export',  [DataController::class, 'VouchersHistoryExport'])->name('VouchersHistoryExport');
+        // d0005 消耗點數發放列表頁
+        Route::get('/paypoint',  [DataController::class, 'PayPointHistoryPage'])->name('PayPointHistoryPage');
+        // d0006 匯出消耗點數發放列表
+        Route::get('/paypoint/export',  [DataController::class, 'PayPointHistoryExport'])->name('PayPointHistoryExport');
+        // d0007 知識點數發放列表頁
+        Route::get('/knowledgepoint',  [DataController::class, 'KnowledgePointHistoryPage'])->name('KnowledgePointHistoryPage');
+        // d0008 匯出知識點數發放列表
+        Route::get('/knowledgepoint/export',  [DataController::class, 'KnowledgePointHistoryExport'])->name('KnowledgePointHistoryExport');
+    });
 });
 
 
+Route::get('point/{uuid}', [PointController::class, 'getPoint'])->name('QrcodeGetPoint');;
 
-Route::get('register', [LoginController::class, 'signup']); 
-Route::get('login', [LoginController::class, 'authenticate']); 
-Route::get('me', [LoginController::class, 'getMyData']); 
-Route::get('logout', [LoginController::class, 'logout']); 
+Route::get('register', [LoginController::class, 'signup']);
+Route::get('login', [LoginController::class, 'authenticate']);
+Route::get('me', [LoginController::class, 'getMyData']);
+Route::get('logout', [LoginController::class, 'logout']);

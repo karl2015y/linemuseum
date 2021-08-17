@@ -21,9 +21,9 @@ class CreatePayPointRecordsTable extends Migration
             //商店名稱
             $table->string('shop_name');
             //民眾id
-            $table->foreignId('member_id')->references('id')->on('members');
+            $table->foreignId('member_id')->nullable();
             //民眾名稱
-            $table->string('member_name');
+            $table->string('member_name')->nullable();
             //消費金額
             $table->integer('price');
             //獲得消費點

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class MemberUsedVoucherRecord extends Model
 {
     use HasFactory;
+    protected $guarded = [];
     /**
      * 所屬兌換券
      */
@@ -28,6 +29,6 @@ class MemberUsedVoucherRecord extends Model
      */
     public function VoucherRecordStatus()
     {
-        return $this->hasMany('App\Models\VoucherRecordStatus', 'voucher_record_id');
+        return $this->hasOne('App\Models\VoucherRecordStatus', 'voucher_record_id')->latest();
     }
 }

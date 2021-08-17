@@ -13,9 +13,11 @@
     {{-- 麵包屑 --}}
     <nav class="col-span-2">
         <ol class="list-reset py-4 pl-2 rounded flex bg-grey-light text-grey">
-            <li><a href="{{route('MuseumPage', ['museum_id'=>$museum->id])}}" class="no-underline text-blue-600">{{$museum['name']}}</a></li>
+            <li><a href="{{route('MuseumPage', ['museum_id'=>$museum->id])}}"
+                    class="no-underline text-blue-600">{{$museum['name']}}</a></li>
             <li class="px-2">/</li>
-            <li><a href="{{route('KnowledgeActivitiesPage',['museum_id'=>$museum->id])}}" class="no-underline text-blue-600">知識點活動列表頁</a></li>
+            <li><a href="{{route('KnowledgeActivitiesPage',['museum_id'=>$museum->id])}}"
+                    class="no-underline text-blue-600">知識點活動列表頁</a></li>
             <li class="px-2">/</li>
             <li class="text-gray-400">知識點活動單頁：{{$ka['name']}}</li>
         </ol>
@@ -34,8 +36,7 @@
             封存活動
         </button>
         @endif
-        <button id="delete-ka-modal-open"
-            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-2 rounded">
+        <button id="delete-ka-modal-open" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-2 rounded">
             刪除活動
         </button>
     </div>
@@ -91,6 +92,25 @@
             </p>
         </div>
 
+        <div class="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
+            <p class="text-gray-600">
+                參與活動 Qrcoded
+            </p>
+            <p>
+                <span class="font-bold">參與連結 </span>
+                <br>
+                <span>
+                    {{route('QrcodeGetPoint',['uuid'=>$ka->QRcode->id])}}
+                </span>
+                <br>
+                <span class="font-bold">參與Qrcode</span>
+                <span class="qrcode">
+                    {!! QrCode::size(200)->generate(route('QrcodeGetPoint',['uuid'=>$ka->QRcode->id])); !!}
+                </span>
+                {{-- <a class="text-blue-500" href="{{route('QrcodeGetPoint',['uuid'=>$ka->QRcode->id])}}">連結</a> --}}
+
+            </p>
+        </div>
 
         <div class="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
             <p class="text-gray-600">
@@ -104,7 +124,7 @@
             </p>
         </div>
 
-        
+
         <div class="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
             <p class="text-gray-600">
                 結束時間
@@ -117,7 +137,7 @@
             </p>
         </div>
 
-        
+
         <div class="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
             <p class="text-gray-600">
                 給予知識點
@@ -127,7 +147,7 @@
             </p>
         </div>
 
-        
+
         <div class="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
             <p class="text-gray-600">
                 獲得週期
@@ -137,7 +157,7 @@
             </p>
         </div>
 
-        
+
 
 
         <div class="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
@@ -180,6 +200,25 @@
 <script>
     window.buttonBindModal('disable-ka-modal-open', '@csrf', 'disable', "是否封存該知識點活動", "封存後該知識點活動及無法登入與執行各項業務", "{{route('DisableKnowledgeActivity',  ['museum_id'=>$museum->id,  'ka_id'=>$ka->id ])}}")
     window.buttonBindModal('delete-ka-modal-open', '@csrf', 'delete', "是否刪除該知識點活動", "刪除後該知識點活動全部的資料將會被銷毀", "{{route('DeleteKnowledgeActivity',  ['museum_id'=>$museum->id,  'ka_id'=>$ka->id ])}}")
-    
+
+
+ 
+    const svg = document.querySelector('.qrcode svg');
+    const canvas = document.createElement('canvas');
+    canvas.width = svg.getBoundingClientRect().width;
+    canvas.height = svg.getBoundingClientRect().height;
+    svg.parentElement.appendChild(canvas);
+    const  svg_xml = (new XMLSerializer()).serializeToString(svg);
+    const ctx = canvas.getContext('2d');
+    const img = new Image();
+    img.onload = function() {
+        ctx.drawImage(img, 0, 0);
+    };
+    img.src = 'data:image/svg+xml;base64,' + btoa(svg_xml);
+    svg.remove();
+
+
+
+
 </script>
 @stop

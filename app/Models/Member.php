@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Member extends Model
 {
     use HasFactory;
+    protected $guarded = [];
+
     /**
      * 取得民眾的知識點活動紀錄
      */

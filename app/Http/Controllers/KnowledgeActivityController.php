@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 // 觸及資料庫
 use App\Models\KnowledgeActivity;
 use App\Models\Museum;
+use App\Models\KnowledgePointRecord;
 
 use Carbon\Carbon;
 
@@ -19,13 +20,27 @@ class KnowledgeActivityController extends Controller
         if(!($request['status'] && $request['status'] == 'ShowDisable')){
             $kas = $kas->where('status','enable');
         } 
+        $today = Carbon::now();
+        if($request['timeline']){
+            if($request['timeline'] == 'ing'){  
+                $kas = $kas->where('start_at', '<=', $today)->where('end_at', '>', $today);
+            }else if($request['timeline'] == 'will'){
+                $kas = $kas->where('start_at', '>', $today);
+            }else if($request['timeline'] == 'done'){
+                $kas = $kas->where('end_at', '<=', $today);
+            }
+        }else{
+            $kas = $kas->where('start_at', '<=', $today)->where('end_at', '>', $today);
+        } 
         
         $kas =  $kas->paginate(10);
 
         if($request['status'] ){
             $kas->appends(['status' => $request['status']]);
         }
-       
+        if($request['timeline'] ){
+            $kas->appends(['timeline' => $request['timeline']]);
+        }
         $data = [
             'museum'=> $museum,
             'kas'=> $kas
@@ -86,6 +101,7 @@ class KnowledgeActivityController extends Controller
             $ka['created_staff_id'] = $request->user()->Staff->id;
         }
         $ka->save();
+        $ka->Qrcode()->create();
         $message_title = "新增成功";
         $message_type = "success";
         $message = "完成知識活動(".$validatedData['name'].")的新增";
@@ -234,7 +250,17 @@ class KnowledgeActivityController extends Controller
         }
     }
     // e2009 知識點紀錄列表頁
-    public function KnowledgeActivityHistoryPage(){}
+    public function KnowledgeActivityHistoryPage($museum_id, $ka_id){
+        $museum = Museum::where('id',$museum_id)->first();
+        $ka = KnowledgeActivity::where('id',$ka_id)->first();
+        $KPRs = KnowledgePointRecord::latest()->where('knowledge_activity_id',$ka_id)->paginate(10);
+        $data = [
+            'ka'=> $ka,
+            'KPRs'=> $KPRs,
+            'museum'=> $museum
+        ];
+        return view('admin.kas.KnowledgeActivityHistoryPage', $data);
+    }
 }
 
 

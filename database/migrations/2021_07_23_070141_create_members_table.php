@@ -20,8 +20,10 @@ class CreateMembersTable extends Migration
             $table->foreignId('user_id')->references('id')->on('users');
             // 性別
             $table->enum('gender', ['male', 'female'])->default('male');
-            // 年齡區間
-            $table->enum('years', ['under20', '21to30', '31to40', '41to50', '51to60', 'up61']);
+            // 生日-年
+            $table->string('year');
+            // 生日-月
+            $table->enum('month', ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10" ,"11", "12"]);
             // 民眾名稱
             $table->string('name');
             // 居住區域

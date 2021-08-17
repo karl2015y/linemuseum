@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Shop;
 use App\Models\Museum;
+use App\Models\PayPointRecord;
+
 
 
 class ShopController extends Controller
@@ -223,6 +225,16 @@ class ShopController extends Controller
         }
     }
     // 消費紀錄列表頁
-    public function ShopsHistoryPage(){}
+    public function ShopsHistoryPage($museum_id, $shop_id){
+        $museum = Museum::where('id',$museum_id)->first();
+        $shop = Shop::where('id',$shop_id)->first();
+        $PPRs = PayPointRecord::where('member_id','<>','')->latest()->where('shop_id',$shop_id)->paginate(10);
+        $data = [
+            'shop'=> $shop,
+            'PPRs'=> $PPRs,
+            'museum'=> $museum
+        ];
+        return view('admin.shops.ShopsHistoryPage', $data);
+    }
 
 }
