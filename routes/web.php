@@ -12,6 +12,17 @@ use App\Http\Controllers\CropController;
 use App\Http\Controllers\DataController;
 use App\Http\Controllers\PointController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\MuseumAdminController;
+use App\Http\Controllers\ShopAdminController;
+use App\Http\Controllers\MemberController;
+use App\Http\Controllers\MemberVoucherController;
+
+
+// 中間界
+use App\Http\Middleware\CheckMuseumIsLogin;
+use App\Http\Middleware\CheckShopIsLogin;
+use App\Http\Middleware\CheckAdminIsLogin;
+use App\Http\Middleware\CheckMemberIsLogin;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,9 +39,14 @@ Route::get('/', function () {
 });
 
 // 總管後台 - 總管人員模組
-Route::prefix('admin')->group(function () {
+Route::middleware(CheckAdminIsLogin::class)->prefix('admin')->group(function () {
     Route::get('/setting', [SettingController::class, 'setConfigPage'])->name('setConfigPage');
     Route::post('/setting', [SettingController::class, 'setConfig'])->name('setConfig');
+
+    // 館舍登入頁
+    Route::get('/login', [SettingController::class, 'LoginPage'])->name('AdminLoginPage');
+    // 登入驗證
+    Route::post('/login', [SettingController::class, 'Login'])->name('AdminLogin');
 
     // StaffController
     Route::prefix('staffs')->group(function () {
@@ -117,7 +133,6 @@ Route::prefix('admin')->group(function () {
             Route::put('/{ka_id}/edit',  [KnowledgeActivityController::class, 'EditKnowledgeActivity'])->name('EditKnowledgeActivity');
             // TODO e1009 知識點紀錄列表頁 
             Route::get('/{ka_id}/history', [KnowledgeActivityController::class, 'KnowledgeActivityHistoryPage'])->name('KnowledgeActivityHistoryPage');
-
         });
     });
     // VoucherController
@@ -171,9 +186,95 @@ Route::prefix('admin')->group(function () {
 });
 
 
-Route::get('point/{uuid}', [PointController::class, 'getPoint'])->name('QrcodeGetPoint');;
+// 館舍後台 MuseumAdminController
+Route::middleware(CheckMuseumIsLogin::class)->prefix('museum')->group(function () {
+    // f0001 館舍登入頁
+    Route::get('/login', [MuseumAdminController::class, 'LoginPage'])->name('MuseumLoginPage');
+    // f0002 登入驗證
+    Route::post('/login', [MuseumAdminController::class, 'Login'])->name('MuseumLogin');
+    // f0003 館舍資料單頁
+    Route::get('/', [MuseumAdminController::class, 'MuseumDatasPage'])->name('MuseumDatasPage');
+    // f0004 館舍下商家列表
+    Route::get('/shops', [MuseumAdminController::class, 'MuseumShopsPage'])->name('MuseumShopsPage');
+    // f0005 商家資料單頁
+    Route::get('/shops/{shop_id}', [MuseumAdminController::class, 'MuseumShopDatasPage'])->name('MuseumShopDatasPage');
+    // f0006 商家消費紀錄列表
+    Route::get('/shops/{shop_id}/history', [MuseumAdminController::class, 'MuseumShopHistoryPage'])->name('MuseumShopHistoryPage');
+});
+// 商家後台 ShopAdminController
+Route::middleware(CheckShopIsLogin::class)->prefix('shop')->group(function () {
+    // g0001 商家登入頁
+    Route::get('/login', [ShopAdminController::class, 'LoginPage'])->name('ShopLoginPage');
+    // g0002 登入驗證
+    Route::post('/login', [ShopAdminController::class, 'Login'])->name('ShopLogin');
+    // g0003 商家資料單頁
+    Route::get('/', [ShopAdminController::class, 'ShopDatasPage'])->name('ShopDatasPage');
+    // g0004 商家消費紀錄列表
+    Route::get('/history', [ShopAdminController::class, 'ShopHistoryPage'])->name('ShopHistoryPage');
+    // g0005 商家給消費點頁
+    Route::get('/givepoint', [ShopAdminController::class, 'ShopGivePointPage'])->name('ShopGivePointPage');
+    // g0006 商家給消費點
+    Route::post('/givepoint', [ShopAdminController::class, 'ShopGivePoint'])->name('ShopGivePoint');
+});
+// 民眾端 MemberController
+Route::middleware(CheckMemberIsLogin::class)->prefix('member')->group(function () {
+    // h0001 民眾登入頁
+    Route::get('/login', [MemberController::class, 'MemberLoginPage'])->name('MemberLoginPage');
+    // h0002 登入驗證
+    Route::post('/login', [MemberController::class, 'MemberLogin'])->name('MemberLogin');
+    // h0003 忘記密碼頁
+    Route::get('/forgetpass', [MemberController::class, 'MemberForgetPassPage'])->name('MemberForgetPassPage');
+    // h0004 忘記密碼
+    Route::post('/forgetpass', [MemberController::class, 'MemberForgetPass'])->name('MemberForgetPass');
+    // h0005 註冊頁
+    Route::get('/register', [MemberController::class, 'MemberRegisterPage'])->name('MemberRegisterPage');
+    // h0006 註冊
+    Route::post('/register', [MemberController::class, 'MemberRegister'])->name('MemberRegister');
+    // i0001 我的點數頁
+    Route::get('/mypoint', [MemberController::class, 'MemberPointPage'])->name('MemberPointPage');
+    // i0002 我的點數頁-消費點紀錄
+    Route::get('/mypoint/payhistory', [MemberController::class, 'MemberPayHistoryPage'])->name('MemberPayHistoryPage');
+    // i0003 我的點數頁-知識點紀錄
+    Route::get('/mypoint/KAhistory', [MemberController::class, 'MemberKAHistoryPage'])->name('MemberKAHistoryPage');
+    // i0004 我的帳號頁
+    Route::get('/myaccount', [MemberController::class, 'MemberAccountPage'])->name('MemberAccountPage');
+    // i0005 編輯我的帳號頁
+    Route::get('/myaccount/edit', [MemberController::class, 'EditMemberAccountPage'])->name('EditMemberAccountPage');
+    // i0007 編輯我的帳號頁
+    Route::put('/myaccount/edit', [MemberController::class, 'EditMemberAccount'])->name('EditMemberAccount');
+
+    Route::prefix('voucherstore')->group(function () {
+        // i0008 兌換券商店列表頁
+        Route::get('/', [MemberController::class, 'VouchersStorePage'])->name('VouchersStorePage');
+        // i0009 兌換券商店單頁
+        Route::get('/{voucher_id}', [MemberController::class, 'VoucherStorePage'])->name('VoucherStorePage');
+        // i0010 購買兌換券
+        Route::post('/{voucher_id}/buy', [MemberController::class, 'BuyVoucher'])->name('BuyVoucher');
+    });
+
+    Route::prefix('myvoucher')->group(function () {
+    // i0011 我的兌換券頁
+    Route::get('/', [MemberVoucherController::class, 'MemberVouchersPage'])->name('MemberVouchersPage');
+    // i0012 我的已兌換兌換券列表頁
+    Route::get('/used', [MemberVoucherController::class, 'MemberUsedVouchersPage'])->name('MemberUsedVouchersPage');
+    // i0013 我的已過期兌換券列表頁
+    Route::get('/passed', [MemberVoucherController::class, 'MemberPassedVouchersPage'])->name('MemberPassedVouchersPage');
+    // i0014 我的未兌換兌換券列表頁
+    Route::get('/cancel', [MemberVoucherController::class, 'MemberCanUseVouchersPage'])->name('MemberCanUseVouchersPage');
+    // i0015 我的兌換券詳細資料頁
+    Route::get('/{voucher_record_id}', [MemberVoucherController::class, 'MemberVoucherPage'])->name('MemberVoucherPage');
+    // i0016 兌換對換券頁
+    Route::get('/{voucher_record_id}/useVoucher', [MemberVoucherController::class, 'MemberUseVoucherPage'])->name('MemberUseVoucherPage');
+    // i0017 兌換對換券
+    Route::post('/{voucher_record_id}/useVoucher', [MemberVoucherController::class, 'MemberUseVoucher'])->name('MemberUseVoucher');
+    });
+
+});
+
+// Qrcode
+Route::get('point/{uuid}', [PointController::class, 'getPoint'])->name('QrcodeGetPoint');
 
 Route::get('register', [LoginController::class, 'signup']);
 Route::get('login', [LoginController::class, 'authenticate']);
 Route::get('me', [LoginController::class, 'getMyData']);
-Route::get('logout', [LoginController::class, 'logout']);
+Route::get('logout', [LoginController::class, 'logout'])->name('logout');

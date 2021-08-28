@@ -9,6 +9,10 @@ class MemberUsedVoucherRecord extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    protected $dates = [
+        'start_at',
+        'end_at',
+    ];
     /**
      * 所屬兌換券
      */
@@ -29,6 +33,6 @@ class MemberUsedVoucherRecord extends Model
      */
     public function VoucherRecordStatus()
     {
-        return $this->hasOne('App\Models\VoucherRecordStatus', 'voucher_record_id')->latest();
+        return $this->hasOne('App\Models\VoucherRecordStatus', 'voucher_record_id')->orderBy('id', 'desc');
     }
 }

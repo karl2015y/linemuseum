@@ -3,9 +3,50 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class SettingController extends Controller
 {
+    // 登入頁
+    public function LoginPage(){
+        return view('admin.setting.LoginPage');
+    }
+    // 登入驗證
+    public function Login(Request $request){
+        $this->validate($request, [
+            'email' => 'required|email',
+            'password' => 'required',
+        ],[
+            'email.required' => ':attribute為必填',
+            'email.email' => ':attribute格式錯誤',
+            'password.required' => ':attribute為必填',
+        ],[
+            'email'=>'電子信箱',
+            'password' => '密碼',
+        ]);
+    
+    
+        $remember_me = $request->has('remember_me') ? true : false;
+
+        if (Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')], $remember_me)){
+            $message_title = "登入成功";
+            $message_type = "success";
+            $message = "歡迎回來";
+            return redirect()->route('MuseumsPage')
+                                ->with('message_title', $message_title)
+                                ->with('message_type', $message_type)
+                                ->with('message', $message);
+        }else{
+            $message_title = "登入失敗";
+            $message_type = "error";
+            $message = "帳號或密碼錯誤";
+            return redirect()->route('AdminLoginPage')
+                                ->with('message_title', $message_title)
+                                ->with('message_type', $message_type)
+                                ->with('message', $message);
+        }
+    }
     // 設定頁面
     public function setConfigPage()
     {

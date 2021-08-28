@@ -45,6 +45,16 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Models\Staff');
     }
+    // 館舍
+    public function Museum()
+    {
+        return $this->hasOne('App\Models\Museum');
+    }
+    // 商家
+    public function Shop()
+    {
+        return $this->hasOne('App\Models\Shop');
+    }
     // 民眾
     public function Member()
     {

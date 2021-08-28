@@ -37,4 +37,13 @@ class Shop extends Model
     {
         return $this->hasMany('App\Models\PayPointRecord');
     }
+    public function AllPrice()
+    {
+        return $this->hasMany('App\Models\PayPointRecord')->sum('price');
+    }
+    public function AllPoint()
+    {
+        return $this->hasMany('App\Models\PayPointRecord')->sum('point');
+    }
+    
 }
