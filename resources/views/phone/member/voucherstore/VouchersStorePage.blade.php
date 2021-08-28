@@ -1,5 +1,5 @@
 @extends('phone.layout.type2')
-@section('title', '我的點數')
+@section('title', '兌換卷商店')
 @section('content')
 <div id="toptitle" class="relative text-center h-20 bg-color-sec flex items-end">
     {{-- <span class="text-xl font-medium">館｜舍｜後｜台</span> --}}
