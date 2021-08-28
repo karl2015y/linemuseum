@@ -118,6 +118,22 @@ class VoucherController extends Controller
     // b0006 兌換券單頁
     public function VucherPage($voucher_id){
         $voucher = Voucher::with('CreatedStaff')->with('VoucherWay')->where('id',$voucher_id)->first();
+        $change_pic_url_times = 0;
+        if($voucher->Pic_1 == null){
+            $voucher->update([
+                'Pic_1'=>"/storage/vouchers/{$voucher->id}/pic1.jpg"
+            ]);
+            $change_pic_url_times++;
+        }
+        if($voucher->Pic_2 == null){
+            $voucher->update([
+                'Pic_2'=>"/storage/vouchers/{$voucher->id}/pic1.jpg"
+            ]);
+            $change_pic_url_times++;
+        }
+        if($change_pic_url_times>0){
+            $voucher = Voucher::with('CreatedStaff')->with('VoucherWay')->where('id',$voucher_id)->first();
+        }
         $data = [
             'voucher' => $voucher
         ];
