@@ -11,6 +11,14 @@ class Member extends Model
     protected $guarded = [];
 
     /**
+     * 所屬民眾
+     */
+    public function User()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
+
+    /**
      * 取得民眾的知識點活動紀錄
      */
     public function KnowledgePointRecord()

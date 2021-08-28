@@ -56,13 +56,74 @@ class MemberController extends Controller
 
     }
     public function MemberForgetPassPage(Request $request){
-        // TODO 忘記密碼頁
+        // 忘記密碼頁
         return view('phone.member.MemberForgetPassPage');
     }
-    public function MemberForgetPass(){
-        // TODO 忘記密碼
-        return redirect()->route('MemberLoginPage');
+    public function MemberForgetPass(Request $request){
+        //  忘記密碼
+        $validatedData = $request->validate([
+            'email' => 'required|email',
+        ],[
+            'email.required' => ':attribute為必填',
+            'email.email' => ':attribute的格式錯誤'
+        ],[
+            'email' => '電子信箱(帳號)',
+        ]);
+        //寄 email
+        $member = Member::where('email', $validatedData['email'])->first();
+        // 確認是否存在在Member表裡
+        if($member){
+            $details = [
+                'title' => '很遺憾您遺失了密碼，但沒關係，點擊下方連結，換個密碼再重新登入吧',
+                'member_id' => $member->id,
+                'created_at' => $member->created_at
+            ];
+            \Illuminate\Support\Facades\Mail::to($validatedData['email'])->send(new \App\Mail\ResetPassword($details));
+        }
+        $message_title = "成功";
+        $message_type = "success";
+        $message = "已將重設密碼之連結寄至您填寫的email，請查收，若沒收到，請確定填寫信箱是否正確";
+        return redirect()->route('MemberLoginPage')
+                            ->with('message_title', $message_title)
+                            ->with('message_type', $message_type)
+                            ->with('message', $message);
     }
+    public function MemberResetPasswordPage(){
+        return view('phone.member.MemberResetPasswordPage');
+    }
+    public function MemberResetPassword($member_id, $created_at, Request $request){
+        // 驗證傳入的數據
+        $validatedData = $request->validate([
+            'password' => 'required|confirmed' ,
+        ],[
+            'password.required' => ':attribute為必填',
+            'password.confirmed' => ':attribute重複錯誤'
+        ],[
+            'password' => '新密碼' ,
+        ]);
+        $member = Member::where('id','=',$member_id)->first();
+        if($member && $member->created_at == $created_at){
+            $member->User()->update([
+                'password' => bcrypt($validatedData['password'])
+            ]);
+            $message_title = "更新成功";
+            $message_type = "success";
+            $message = "趕快輸入帳號密碼登入吧~";
+            return redirect()->route('MemberLoginPage')
+                                ->with('message_title', $message_title)
+                                ->with('message_type', $message_type)
+                                ->with('message', $message);
+        }else{
+            $message_title = "驗證失敗";
+            $message_type = "error";
+            $message = "實在很抱歉，發生未知的錯誤，請聯絡管理員，並告知您的email";
+            return redirect()->route('MemberLoginPage')
+                                ->with('message_title', $message_title)
+                                ->with('message_type', $message_type)
+                                ->with('message', $message);
+        }
+    }
+
     public function MemberRegisterPage(){
         $museums = Museum::latest()->where('status','enable')->get();
         $data = [
@@ -143,14 +204,19 @@ class MemberController extends Controller
                     'recommend_museum' => $validatedData['recommend_museum'],
                 ]);
                 
-                // 給予點數
-                $setting = \App\Models\Setting::where('id', 1)->first();
-                $PC = new \App\Http\Controllers\PointController;
-                $PC->memberGivePointMethod( $member->id, "註冊成功", $setting['singup_get_point']);
+                $details = [
+                    'title' => '恭喜註冊成功，點擊下方連結，啟用帳號吧',
+                    'member_id' => $member->id,
+                    'created_at' => $member->created_at
+                ];
+               
+                //寄 email
+                \Illuminate\Support\Facades\Mail::to($validatedData['email'])->send(new \App\Mail\VerifyMail($details));
+
                 
                 $message_title = "註冊成功";
                 $message_type = "success";
-                $message = "請至email驗證註冊資訊";
+                $message = "請至email驗證註冊資訊，來獲得註冊禮";
                 return redirect()->route('MemberLoginPage')
                                     ->with('message_title', $message_title)
                                     ->with('message_type', $message_type)
@@ -158,6 +224,45 @@ class MemberController extends Controller
         // 新增用戶
 
         return redirect()->route('MemberLoginPage');
+    }
+    public function MemberVerifyMail($member_id, $created_at){
+        $member = Member::where('id','=',$member_id)->first();
+        if($member && $member->created_at == $created_at){
+            if($member->User->email_verified_at){
+                $message_title = "重複驗證";
+                $message_type = "success";
+                $message = "已在{$member->User->email_verified_at}完成驗證，趕快輸入帳號密碼登入吧~";
+                return redirect()->route('MemberLoginPage')
+                                    ->with('message_title', $message_title)
+                                    ->with('message_type', $message_type)
+                                    ->with('message', $message);
+            }
+            $member->User()->update([
+                'email_verified_at' =>Carbon::now()
+            ]);
+
+            // 給予點數
+            $setting = \App\Models\Setting::where('id', 1)->first();
+            $PC = new \App\Http\Controllers\PointController;
+            $PC->memberGivePointMethod( $member_id, "註冊成功", $setting['singup_get_point']);
+
+
+            $message_title = "驗證成功";
+            $message_type = "success";
+            $message = "趕快輸入帳號密碼登入吧~";
+            return redirect()->route('MemberLoginPage')
+                                ->with('message_title', $message_title)
+                                ->with('message_type', $message_type)
+                                ->with('message', $message);
+        }else{
+            $message_title = "驗證失敗";
+            $message_type = "error";
+            $message = "實在很抱歉，發生未知的錯誤，請聯絡管理員，並告知您的email";
+            return redirect()->route('MemberLoginPage')
+                                ->with('message_title', $message_title)
+                                ->with('message_type', $message_type)
+                                ->with('message', $message);
+        }
     }
     public function MemberPointPage(Request $request){
         $datas = [

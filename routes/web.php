@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+
+
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\MuseumController;
@@ -33,10 +35,6 @@ use App\Http\Middleware\CheckMemberIsLogin;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
 
 // 總管後台 - 總管人員模組
 Route::middleware(CheckAdminIsLogin::class)->prefix('admin')->group(function () {
@@ -184,8 +182,6 @@ Route::middleware(CheckAdminIsLogin::class)->prefix('admin')->group(function () 
         Route::get('/knowledgepoint/export',  [DataController::class, 'KnowledgePointHistoryExport'])->name('KnowledgePointHistoryExport');
     });
 });
-
-
 // 館舍後台 MuseumAdminController
 Route::middleware(CheckMuseumIsLogin::class)->prefix('museum')->group(function () {
     // f0001 館舍登入頁
@@ -218,7 +214,7 @@ Route::middleware(CheckShopIsLogin::class)->prefix('shop')->group(function () {
 });
 // 民眾端 MemberController
 Route::middleware(CheckMemberIsLogin::class)->prefix('member')->group(function () {
-    // h0001 民眾登入頁
+       // h0001 民眾登入頁
     Route::get('/login', [MemberController::class, 'MemberLoginPage'])->name('MemberLoginPage');
     // h0002 登入驗證
     Route::post('/login', [MemberController::class, 'MemberLogin'])->name('MemberLogin');
@@ -273,6 +269,13 @@ Route::middleware(CheckMemberIsLogin::class)->prefix('member')->group(function (
 
 // Qrcode
 Route::get('point/{uuid}', [PointController::class, 'getPoint'])->name('QrcodeGetPoint');
+
+
+ // 民眾驗證信箱
+ Route::get('/verify/{member_id}/{created_at}', [MemberController::class, 'MemberVerifyMail'])->name('MemberVerifyMail');
+ // 重設密碼
+ Route::get('/resetpw/{member_id}/{created_at}', [MemberController::class, 'MemberResetPasswordPage'])->name('MemberResetPasswordPage');
+ Route::post('/resetpw/{member_id}/{created_at}', [MemberController::class, 'MemberResetPassword'])->name('MemberResetPassword');
 
 Route::get('register', [LoginController::class, 'signup']);
 Route::get('login', [LoginController::class, 'authenticate']);

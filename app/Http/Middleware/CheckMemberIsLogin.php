@@ -33,7 +33,6 @@ class CheckMemberIsLogin
             'MemberForgetPass'=>true,
             'MemberRegisterPage'=>true,
             'MemberRegister'=>true,
-         
         ];
         $isLogin = Auth::viaRemember() || ($request->user() && $request->user()->Member);
         if($DontCheckRoutes[$request->route()->getname()] ?? null){
