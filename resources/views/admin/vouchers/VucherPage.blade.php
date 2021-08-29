@@ -157,11 +157,14 @@
 
         <div class="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
             <div>
+                @if($voucher['status']=='enable')
                 <a href="{{route('CreateVoucherPicsPage', ['voucher_id'=>$voucher->id, 'mode'=>'edit' ])}}">
                     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold text-sm py-1 px-2 rounded">
                         編輯圖片
                     </button>
-                </a><br>
+                </a>
+                @endif
+                <br>
                 <span>小圖片 (350 x 350)</span>
                 <img class="mt-1 shadow"  style="width: 350px; height:350px" src="/storage/vouchers/{{$voucher->id}}/pic1.jpg" alt="">
             </div>
@@ -196,8 +199,8 @@
 
 
 <script>
-    window.buttonBindModal('disable-voucher-modal-open', '@csrf', 'disable', "是否封存該兌換券", "封存後該兌換券及無法登入與執行各項業務", "{{route('DisableVucher', ['voucher_id'=>$voucher['id'] ])}}")
-    window.buttonBindModal('delete-voucher-modal-open', '@csrf', 'delete', "是否刪除該兌換券", "刪除後該兌換券全部的資料將會被銷毀", "{{route('DeleteVucher', ['voucher_id'=>$voucher['id'] ])}}")
+    window.buttonBindModal('disable-voucher-modal-open', '@csrf', 'disable', "是否封存該兌換券", "封存後該兌換券無法再被修改與購買，但民眾已購買的券還是可以做兌換", "{{route('DisableVucher', ['voucher_id'=>$voucher['id'] ])}}")
+    window.buttonBindModal('delete-voucher-modal-open', '@csrf', 'delete', "是否刪除該兌換券", "刪除後該兌換券全部的資料將會被銷毀無法再被查閱，但民眾已購買的券還是可以做兌換", "{{route('DeleteVucher', ['voucher_id'=>$voucher['id'] ])}}")
     
 </script>
 
