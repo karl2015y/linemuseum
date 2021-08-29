@@ -127,7 +127,7 @@ class VoucherController extends Controller
         }
         if($voucher->Pic_2 == null){
             $voucher->update([
-                'Pic_2'=>"/storage/vouchers/{$voucher->id}/pic1.jpg"
+                'Pic_2'=>"/storage/vouchers/{$voucher->id}/pic2.jpg"
             ]);
             $change_pic_url_times++;
         }
