@@ -32,10 +32,10 @@
             封存館舍
         </button>
         @endif
-        <button id="delete-museum-modal-open"
+        {{-- <button id="delete-museum-modal-open"
             class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-2 rounded">
             刪除館舍
-        </button>
+        </button> --}}
     </div>
 </div>
 

@@ -36,9 +36,9 @@
             封存活動
         </button>
         @endif
-        <button id="delete-ka-modal-open" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-2 rounded">
+        {{-- <button id="delete-ka-modal-open" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-2 rounded">
             刪除活動
-        </button>
+        </button> --}}
     </div>
 </div>
 

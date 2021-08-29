@@ -34,10 +34,10 @@
             封存商家
         </button>
         @endif
-        <button id="delete-shop-modal-open"
+        {{-- <button id="delete-shop-modal-open"
             class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-2 rounded">
             刪除商家
-        </button>
+        </button> --}}
     </div>
 </div>
 
