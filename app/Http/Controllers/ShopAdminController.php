@@ -64,7 +64,7 @@ class ShopAdminController extends Controller
         $datas=[
             'shop' => $request->user()->Shop->with('Museum')->first()
          ];
-        //  return $datas;
+         return $datas;
         return view('phone.shop.ShopGivePointPage', $datas);
     }
 
