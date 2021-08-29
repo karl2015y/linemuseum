@@ -19,7 +19,9 @@ class CheckAdminIsLogin
     {
         $DontCheckRoutes = ['AdminLoginPage'=>true, 'AdminLogin'=>true];
         $isLogin = Auth::viaRemember() || ($request->user() && $request->user()->Staff);
-        if( $isLogin && $request->user()->Staff->status =='disable'){
+        $isDisable = $isLogin && $request->user()->Staff->status =='disable';
+        if($isDisable){
+            Auth::logout();
             $message_title = "權限錯誤";
             $message_type = "error";
             $message = "很抱歉，該帳戶已被後台封存，請聯絡管理員";
