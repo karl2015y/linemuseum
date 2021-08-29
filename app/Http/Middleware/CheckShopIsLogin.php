@@ -20,6 +20,17 @@ class CheckShopIsLogin
     {
         $DontCheckRoutes = ['ShopLoginPage'=>true, 'ShopLogin'=>true];
         $isLogin = Auth::viaRemember() || ($request->user() && $request->user()->Shop);
+        $isDisable = $isLogin && $request->user()->Shop->status =='disable';
+        if($isDisable){
+            Auth::logout();
+            $message_title = "權限錯誤";
+            $message_type = "error";
+            $message = "很抱歉，該帳戶已被後台封存，請聯絡管理員";
+            return redirect()->route('ShopLoginPage')
+                                ->with('message_title', $message_title)
+                                ->with('message_type', $message_type)
+                                ->with('message', $message);
+        }
         if($DontCheckRoutes[$request->route()->getname()] ?? null){
             if($isLogin){
                 $message_title = "登入成功";
