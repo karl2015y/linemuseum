@@ -61,11 +61,11 @@ class ShopAdminController extends Controller
         return view('phone.shop.ShopHistoryPage', $datas);
     }
     public function ShopGivePointPage(Request $request){
+        $request->user()->Shop->Museum;
         $datas=[
-           'shop1' => $request->user()->Shop,
-            'shop2' => $request->user()->Shop->with('Museum')->get()
+           'shop' => $request->user()->Shop,
          ];
-         return $datas;
+        //  return $datas;
         return view('phone.shop.ShopGivePointPage', $datas);
     }
 
