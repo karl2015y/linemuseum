@@ -20,11 +20,23 @@ class PointController extends Controller
             $ka = $qr->ka;
             // 檢查 是否未開始
             if ($ka->start_at > $now) {
-                return "活動將在{$ka->start_at}({$ka->start_at->diffForHumans()})後開始";
+                $message_title = "獲點失敗";
+                $message_type = "error";
+                $message = "活動將在{$ka->start_at}({$ka->start_at->diffForHumans()})後開始";
+                return redirect()->route('MemberPointPage')
+                                    ->with('message_title', $message_title)
+                                    ->with('message_type', $message_type)
+                                    ->with('message', $message);
             }
             // 檢查 是否已過期
             if ($ka->end_at <= $now) {
-                return "活動已在{$ka->end_at}({$ka->end_at->diffForHumans()})過期";
+                $message_title = "獲點失敗";
+                $message_type = "error";
+                $message = "活動已在{$ka->end_at}({$ka->end_at->diffForHumans()})過期";
+                return redirect()->route('MemberPointPage')
+                                    ->with('message_title', $message_title)
+                                    ->with('message_type', $message_type)
+                                    ->with('message', $message);
             }
             // return ($ka);
             // 檢查週期時間是否未超過
@@ -33,7 +45,13 @@ class PointController extends Controller
                 $latest_KA_Temp = clone $latest_KA;
                 $ka_cycle_deadline = $latest_KA_Temp->addHours($ka->point_cycle_hour)->addMinutes($ka->point_cycle_min);
                 if ($ka_cycle_deadline > $now) {
-                    return "已於{$latest_KA}({$latest_KA->diffForHumans()})領取過點數，請於{$ka_cycle_deadline}({$ka_cycle_deadline->diffForHumans()})後再次掃描";
+                    $message_title = "獲點失敗";
+                    $message_type = "error";
+                    $message = "已於{$latest_KA}({$latest_KA->diffForHumans()})領取過點數，請於{$ka_cycle_deadline}({$ka_cycle_deadline->diffForHumans()})後再次掃描";
+                    return redirect()->route('MemberPointPage')
+                                        ->with('message_title', $message_title)
+                                        ->with('message_type', $message_type)
+                                        ->with('message', $message);
                 }
             }
             // 寫入給點紀錄
@@ -47,17 +65,35 @@ class PointController extends Controller
             $member->update([
                 'knowledge_point' => $member->knowledge_point + $ka->point
             ]);
-            return '給點成功';
+            $message_title = "給點成功";
+            $message_type = "success";
+            $message = "歡迎多多參與活動";
+            return redirect()->route('MemberPointPage')
+                                ->with('message_title', $message_title)
+                                ->with('message_type', $message_type)
+                                ->with('message', $message);
         } elseif ($qr->ppr_id) {
             $ppr = $qr->ppr;
             // 檢查是否已經給過消費點
             if ($ppr->member_id) {
-                return '消費點點數已於' . $ppr->updated_at . "({$ppr->updated_at->diffForHumans()})" . '發放';
+                $message_title = "獲點失敗";
+                $message_type = "error";
+                $message = '消費點點數已於' . $ppr->updated_at . "({$ppr->updated_at->diffForHumans()})" . '發放';
+                return redirect()->route('MemberPointPage')
+                                    ->with('message_title', $message_title)
+                                    ->with('message_type', $message_type)
+                                    ->with('message', $message);
             }
             // 檢查是否超過五分鐘
             $deadline = $qr->created_at->addMinutes(5);
             if ($now > $deadline) {
-                return '已於' . $deadline . "({$deadline->diffForHumans()})" . '過期';
+                $message_title = "獲點失敗";
+                $message_type = "error";
+                $message = '已於' . $deadline . "({$deadline->diffForHumans()})" . '過期';
+                return redirect()->route('MemberPointPage')
+                                    ->with('message_title', $message_title)
+                                    ->with('message_type', $message_type)
+                                    ->with('message', $message);
             }
             // 使消費點發放紀錄跟民眾綁定
             $ppr->update([
@@ -68,7 +104,13 @@ class PointController extends Controller
             $member->update([
                 'pay_point' => $member->pay_point + $ppr->point
             ]);
-            return '給點成功';
+            $message_title = "給點成功";
+            $message_type = "success";
+            $message = "感謝您的消費，歡迎您再次光臨";
+            return redirect()->route('MemberPointPage')
+                                ->with('message_title', $message_title)
+                                ->with('message_type', $message_type)
+                                ->with('message', $message);
         } else {
             return '系統錯誤，請再次嘗試';
             // $message_title = "錯誤";
