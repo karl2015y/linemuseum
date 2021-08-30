@@ -20,7 +20,7 @@
     @foreach ($vcrs as $vcr)
         <div class="p-4 border-solid border-t-2 border-gray-300">
             <img class="w-72 h-72 mx-auto object-cover rounded-2xl shadow"
-                src="{{$vcr->pic_1}}" alt="">
+                src="{{$vcr->pic_1}}?t={{rand()}}" alt="">
             <h1 class="my-2 ml-3">【{{$vcr->voucher_name}}】</h1>
             <div class="mb-1 ml-5 font-light text-sm text-gray-400">開始時間 | {{$vcr->start_at}}</div>
             <div class="my-1 ml-5 font-light text-sm text-gray-400">結束時間 | {{$vcr->end_at}}</div>

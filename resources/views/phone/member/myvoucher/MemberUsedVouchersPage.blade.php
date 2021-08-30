@@ -20,7 +20,7 @@
     @foreach ($vcrs as $vcr)
          <a href="{{route('MemberVoucherPage', ['voucher_record_id'=>$vcr->id])}}">
             <div class="p-4 border-solid border-t-2 border-gray-300">
-                <img class="w-72 h-72 mx-auto object-cover rounded-2xl shadow" src="{{$vcr->pic_1}}" alt="">
+                <img class="w-72 h-72 mx-auto object-cover rounded-2xl shadow" src="{{$vcr->pic_1}}?t={{rand()}}" alt="">
                 <h1 class="my-2 text-center">【{{$vcr->voucher_name}}】</h1>
                 <div class="mb-1 ml-2 font-light text-sm text-gray-400 text-center">已在 {{$vcr->VoucherRecordStatus->created_at}} 時兌換</div>
                 <div >

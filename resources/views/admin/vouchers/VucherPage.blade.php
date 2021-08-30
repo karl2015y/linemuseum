@@ -166,11 +166,11 @@
                 @endif
                 <br>
                 <span>小圖片 (350 x 350)</span>
-                <img class="mt-1 shadow"  style="width: 350px; height:350px" src="/storage/vouchers/{{$voucher->id}}/pic1.jpg" alt="">
+                <img class="mt-1 shadow"  style="width: 350px; height:350px" src="/storage/vouchers/{{$voucher->id}}/pic1.jpg?t={{rand()}}" alt="">
             </div>
             <div class="pt-6">
                 <span>大圖片 (350 x 790)</span>
-                <img class="mt-1 shadow" style="width: 350px; height:790px" src="/storage/vouchers/{{$voucher->id}}/pic2.jpg" alt="">
+                <img class="mt-1 shadow" style="width: 350px; height:790px" src="/storage/vouchers/{{$voucher->id}}/pic2.jpg?t={{rand()}}" alt="">
             </div>
         </div>
     </div>

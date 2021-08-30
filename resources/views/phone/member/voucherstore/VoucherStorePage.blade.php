@@ -20,7 +20,7 @@
 
     <div class="p-4">
         <img class="w-72 h-72 mx-auto object-cover rounded-2xl shadow"
-            src="{{$voucher->pic_1}}" alt="">
+            src="{{$voucher->pic_1}}?t={{rand()}}" alt="">
         <h1 class="my-2">【{{$voucher->name}}】</h1>
         <div class="my-1 ml-2 font-light text-sm text-color-third">剩餘數量｜<span class="text-2xl font-mono">{{$voucher->amount}}</span> 張
         </div>

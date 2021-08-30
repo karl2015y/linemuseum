@@ -46,7 +46,7 @@
 
     <div class="p-4">
         <img class="w-72 h-72 mx-auto object-cover rounded-2xl shadow"
-            src="{{$vcr->pic_1}}" alt="">
+            src="{{$vcr->pic_1}}?t={{rand()}}" alt="">
         <h1 class="my-2">【{{$vcr->voucher_name}}】{{$vcr_status=='pass'?'- 已過期':''}}{{$vcr_status=='used'?'- 已兌換':''}}</h1>
         <div class="mb-1 ml-2 font-light text-sm">開始時間｜<span class="text-gray-400">{{$vcr->start_at}}({{$vcr->start_at->diffForHumans()}})</span></div>
         <div class="my-1 ml-2 font-light text-sm">結束時間｜<span class="text-gray-400">{{$vcr->end_at}}({{$vcr->end_at->diffForHumans()}})</span></div>

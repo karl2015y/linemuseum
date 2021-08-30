@@ -17,7 +17,7 @@
 
 <div class="flex flex-col justify-between" style="height: calc(100% - 8.4rem);">
     <div class="flex flex-col justify-around h-full">
-        <img class="w-full h-full object-cover" src="{{$vcr->Pic_2}}" alt="">
+        <img class="w-full h-full object-cover" src="{{$vcr->Pic_2}}?t={{rand()}}" alt="">
     </div>
 
     <div id="time" class="flex justify-center items-center py-2 h-20 text-3xl bg-color-third text-white">
