@@ -66,6 +66,9 @@ class CropController extends Controller
 
     public function postCrop(Request $request){
         $form_data = $request->all();
+        if(strpos($form_data['imgUrl'],'?t=')){
+            $form_data['imgUrl'] = explode('?t=', $form_data['imgUrl'])[0];
+        }
         $image_path = public_path($form_data['imgUrl']);
         $image_url = $form_data['imgUrl'];
 
