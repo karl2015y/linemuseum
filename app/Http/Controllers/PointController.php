@@ -12,6 +12,27 @@ class PointController extends Controller
 {
     public function getPoint($uuid, Request $request)
     {
+        $isLogin = $request->user() != null;
+        $isMember = $request->user() && $request->user()->Member;
+        if(! $isLogin){
+            $message_title = "尚未登入";
+            $message_type = "error";
+            $message = "完成登入後，請再次掃描QRcode";
+            return redirect()->route('MemberLoginPage')
+                                ->with('message_title', $message_title)
+                                ->with('message_type', $message_type)
+                                ->with('message', $message);
+        }
+        if(! $isMember){
+            \Illuminate\Support\Facades\Auth::logout();
+            $message_title = "權限錯誤";
+            $message_type = "error";
+            $message = "該帳號尚未註冊民眾端資料，請註冊後再次掃描QRcode";
+            return redirect()->route('MemberLoginPage')
+                                ->with('message_title', $message_title)
+                                ->with('message_type', $message_type)
+                                ->with('message', $message);
+        }
         $member = $request->user()->Member;
         $qr = Qrcode::where('id', $uuid)->with('ka', 'ppr')->first();
         $now = \Carbon\Carbon::now();
