@@ -58,7 +58,7 @@ class CropController extends Controller
         // 回傳
         return response()->json([
             'status'    => 'success',
-            'url'       => "/storage/{$imagePath}",
+            'url'       => "/storage/{$imagePath}?t=". rand(),
             'width'     => $image->width(),
             'height'    => $image->height()
         ], 200);
