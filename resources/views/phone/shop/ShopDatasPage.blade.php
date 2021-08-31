@@ -4,6 +4,9 @@
 {{-- topbar --}}
 <div id="toptitle" class="relative text-center  pb-2 pt-12 bg-color-sec">
     <span class="text-xl font-medium">商｜家｜管｜理</span>
+    <a class="absolute right-5 bottom-2 text-gray-500" href="{{route('logout')}}">
+        <span>登出</span>
+    </a>
 </div>
 <div id="toptitleSpace" class="hidden w-full h-24"></div>
 {{-- museum datas--}}
