@@ -1,8 +1,8 @@
 @extends('phone.layout.type2')
 @section('title', '後台登入')
 @section('content')
-<div class="flex h-full">
-    <div class="mt-20 mb-10 px-12 flex justify-center items-center w-full">
+<div class="flex h-full flex-col items-center justify-center">
+    <div class=" flex justify-center items-center w-72 h-auto">
         <img src="/asset/img/logo-row.png" alt="橫向logo">
     </div>
     <form action="{{route('AdminLogin')}}" method="post" class="px-10 flex flex-col justify-center w-1/3">
