@@ -2274,6 +2274,11 @@ var createEdit = function createEdit(textarea_css_feature) {
   editor.config.onchange = function (html) {
     // 第二步同步更新到 textarea
     $text1.value = html;
+    console.log('editor text: ', html === '');
+
+    if (html == '') {
+      editor.txt.html("<div style='display: none;'><div/>");
+    }
   }; // 配置選單列，設定不需要的菜單
 
 
