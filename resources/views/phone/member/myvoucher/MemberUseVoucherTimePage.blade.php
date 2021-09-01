@@ -15,12 +15,12 @@
 </div>
 <div id="toptitleSpace" class="hidden w-full h-24"></div>
 
-<div class="flex flex-col justify-between" style="height: calc(100% - 8.4rem);">
+<div class="flex flex-col justify-between" style="height: calc(100% - 10rem);">
     <div class="flex flex-col justify-around h-full">
         <img class="w-full h-full object-cover" src="{{$vcr->Pic_2}}?t={{rand()}}" alt="">
     </div>
 
-    <div id="time" class="flex justify-center items-center py-2 h-20 text-3xl bg-color-third text-white">
+    <div id="time" class="flex justify-center items-center py-6 h-20 text-3xl bg-color-third text-white">
         0:59
     </div>
 </div>

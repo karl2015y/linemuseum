@@ -34,7 +34,7 @@
         <div class="h-full flex flex-col justify-between">
             <div id="model-text" class="pt-8 px-6 text-xl text-gray-400 font-light">
                 <h1 class="font-bold text-2xl text-black mb-6">是否確定使用兌換?</h1>
-                按「是」確定兌換後,請於60秒內將手機畫面出示店家查看
+                是否確認兌換<br>(不要自己在家按喔^ _ ^)
             </div>
             <div class="flex justify-around text-2xl font-medium">
                 <div class="w-1/2 text-center border-r border-solid border-gray-300">
