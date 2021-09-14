@@ -39,10 +39,13 @@
 
             <!-- logo -->
             <div class="flex">
-                <a href="/admin" class="text-white flex items-center space-x-2 px-4">
+                <div class="text-white flex items-center space-x-2 px-4">
                     <img class="w-full h-full" src="/asset/img/logo-row.png" alt="">
+                </div>
+                {{-- <a href="/admin" class="text-white flex items-center space-x-2 px-4"> --}}
+                    {{-- <img class="w-full h-full" src="/asset/img/logo-row.png" alt=""> --}}
                     <!-- mobile menu button -->
-                </a>
+                {{-- </a> --}}
                 <button class="mobile-menu-button p-4 focus:outline-none focus:bg-gray-700 md:hidden">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg">
