@@ -58,8 +58,8 @@ Swal.fire({
     /* @else */
     icon: "{{session('message_type')}}",
     showConfirmButton: false,
-    /* @endif */
     timer: 1500
+    /* @endif */
 })
 </script>
 @endif
