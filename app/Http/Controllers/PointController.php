@@ -193,7 +193,7 @@ class PointController extends Controller
         } else {
             $message_title = "給點失敗";
             $message_type = "error";
-            $message = "找不到該民眾的資料";
+            $message = "請確認點數是否扣到負的或民眾資料是否正確";
         }
         return redirect()->route('memberPointHistoryPage', ['member_id' => $member_id])
             ->with('message_title', $message_title)
@@ -204,7 +204,7 @@ class PointController extends Controller
     {
         // 取得民眾資料
         $member = \App\Models\Member::where('id', $member_id)->first();
-        if ($member == null) {
+        if ($member == null || ($member->knowledge_point + $point)<0 ) {
             return false;
         }
 

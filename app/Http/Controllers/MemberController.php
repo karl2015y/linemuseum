@@ -215,7 +215,7 @@ class MemberController extends Controller
 
                 
                 $message_title = "註冊成功";
-                $message_type = "success";
+                $message_type = "confirm-success";
                 $message = "請至email驗證註冊資訊，來獲得註冊禮";
                 return redirect()->route('MemberLoginPage')
                                     ->with('message_title', $message_title)
@@ -397,7 +397,7 @@ class MemberController extends Controller
             ['amount', '>=', 1]
         ])->first();
         $voucher_way = $voucher->VoucherWay->where('id',$vw_id)->first();
-        if( $voucher == null ||  $voucher_way == null){
+        if( $voucher == null ||  $voucher_way == null || ($member->knowledge_point - $voucher_way->knowledge_point)<0 ||  ($member->pay_point - $voucher_way->pay_point)<0){
             $message_title = "購券失敗";
             $message_type = "error";
             $message = "請重新嘗試購買";

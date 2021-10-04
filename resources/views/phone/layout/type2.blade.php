@@ -52,8 +52,13 @@
 Swal.fire({
     title: "{{session('message_title')}}",
     text: "{{session('message')}}",
+    ``` @if ( str_contains(session('message_type'), '-')) { ```
+    icon: "{{ explode('-', session('message_type'))[1] }}",
+    showConfirmButton: false,
+    ``` } else { ```
     icon: "{{session('message_type')}}",
     showConfirmButton: false,
+    ``` } ```
     timer: 1500
 })
 </script>
