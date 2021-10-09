@@ -18,7 +18,7 @@
         <div class="flex justify-between items-center mx-8 mt-20 pb-6 text-color-main border-solid border-b-2">
             <span class="mt-2 text-xl font-medium">兌換比例</span>
             <span id="point_percent" class="text-4xl font-medium">{{$museum->buy_hundred_get_point}}</span>
-            <span class="mt-2 text-xl font-medium">點／百元</span>
+            <span class="mt-2 text-xl font-medium">點／元</span>
         </div>
         <div class="flex justify-between mx-8 pt-7 text-color-main border-solid border-t-2">
             <span class="text-xl font-medium">消費金額</span>

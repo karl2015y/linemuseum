@@ -68,9 +68,9 @@
     {{-- 消費百點送 --}}
     <div class="relative h-10 input-component mb-5 formInputGroup">
         <input id="buy_hundred_get_point" name="buy_hundred_get_point" value="{{ old('buy_hundred_get_point', $museum['buy_hundred_get_point']) }}" type="text" 
-            class="h-full w-full border-gray-300 px-2 transition-all border-blue rounded-sm" />
+            class="h-full w-full border-gray-300 px-2 transition-all border-blue rounded-sm" placeholder="EX:消費一元送一點就輸入1" />
         <label for="buy_hundred_get_point" class="absolute left-2 transition-all bg-white px-1">
-            消費百點送 <span class="text-red-500 font-bold">*</span>
+            消費點(點/元) <span class="text-red-500 font-bold">*</span>
         </label>
     </div>
     {{-- 館舍密碼 --}}

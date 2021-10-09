@@ -102,7 +102,7 @@
         </div>
         <div class="md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b">
             <p class="text-gray-600">
-                消費百元送
+                消費點(點/元)
             </p>
             <p>
                 {{$museum['buy_hundred_get_point']}} 點

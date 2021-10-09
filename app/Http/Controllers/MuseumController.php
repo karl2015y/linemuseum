@@ -59,7 +59,7 @@ class MuseumController extends Controller
             'name'=>'館舍名稱',
             'address'=>'館舍地址',
             'phone'=>'館舍電話',
-            'buy_hundred_get_point'=>'消費百點送',
+            'buy_hundred_get_point'=>'消費點(點/元)',
             'email'=>'館舍人員信箱',
             'password'=>'密碼',
             'description'=>'簡介',
@@ -171,7 +171,7 @@ class MuseumController extends Controller
             'name'=>'館舍名稱',
             'address'=>'館舍地址',
             'phone'=>'館舍電話',
-            'buy_hundred_get_point'=>'消費百點送',
+            'buy_hundred_get_point'=>'消費點(點/元)',
             'description'=>'簡介',
         ]);
         // 確認是否更新密碼
