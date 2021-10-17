@@ -97,7 +97,7 @@
   el: '#app',
   data: {
     prebuy:{
-        name:'{{$voucher->name}}',
+        name:'{!!$voucher->name!!}',
         need_point:'{{$voucher_way->text}}',
         img:'{{$voucher->pic_1}}?t={{rand()}}'
     },
