@@ -112,7 +112,7 @@
                     </div>
                     <div class="-mt-1">
                         <h3 class="text-gray-500">商品名稱</h3>
-                        <h4 class="font-bold">@{{prebuy.name}}</h4>
+                        <h4 class="font-bold" v-html="prebuy.name"></h4>
                         <h3 class="text-gray-500">預購數量</h3>
                         <h4 class="font-bold">1</h4>
                         <h3 class="text-gray-500">所需點數</h3>
@@ -189,7 +189,7 @@
     phone:"",
     email:"",
     prebuy:{
-        name:'{{$voucher->name}}',
+        name:'{!!$voucher->name!!}',
         need_point:'{{$voucher_way->text}}',
         img:'{{$voucher->pic_1}}?t={{rand()}}'
     },
