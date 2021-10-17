@@ -6,18 +6,54 @@
     <img class="h-1/2 w-auto mx-auto mb-2" src="/asset/img/logo-row.png" alt="row-logo">
 </div>
 <div class="flex flex-col justify-between" style="height: calc(100% - 5rem);">
-    <div class=" flex flex-col h-4/5 overflow-hidden">
+    <div class=" flex flex-col overflow-auto">
         {{-- 未兌換 MemberCanUseVouchersPage--}}
         <a href="{{route('MemberCanUseVouchersPage')}}">
-            <img class="mt-2 w-10/12 h-auto mx-auto" src="/asset/img/cancel.png" alt="未兌換">
+            <div class="relative">
+                <h2 class="absolute top-1/2 left-1/2 text-4xl -ml-16 -mt-5 font-medium text-white">未 兌 換</h2>
+                @if ($unused_vcrs_count>0)
+                <div style="min-width: 10px;min-height: 10px;max-width: 33px;max-height: 33px;width: 8vw;height: 8vw;" class="absolute top-1/4 right-1/4 rounded-full flex justify-center items-center bg-color-third text-white font-medium -mt-1 -mr-1">
+                    {{$unused_vcrs_count}}
+                </div>
+                @endif
+                <img class="mt-2 w-10/12 h-auto mx-auto" src="/asset/img/voucher.jpg" alt="未兌換">
+            </div>
         </a>
         {{-- 已兌換 MemberUsedVouchersPage--}}
         <a href="{{route('MemberUsedVouchersPage')}}">
-            <img class="mt-2 w-10/12 h-auto mx-auto" src="/asset/img/used.png" alt="已兌換">
+            <div class="relative">
+                <h2 class="absolute top-1/2 left-1/2 text-4xl -ml-16 -mt-5 font-medium text-white">已 兌 換</h2>
+                @if ($used_vcrs_count>0)
+                <div style="min-width: 10px;min-height: 10px;max-width: 33px;max-height: 33px;width: 8vw;height: 8vw;" class="absolute top-1/4 right-1/4 rounded-full flex justify-center items-center bg-color-third text-white font-medium -mt-1 -mr-1">
+                    {{$used_vcrs_count}}
+                </div>
+                @endif
+                <img class="mt-2 w-10/12 h-auto mx-auto" src="/asset/img/voucher.jpg" alt="已兌換">
+            </div>
         </a>
         {{-- 已過期 MemberPassedVouchersPage--}}
         <a href="{{route('MemberPassedVouchersPage')}}">
-            <img class="my-2 w-10/12 h-auto mx-auto" src="/asset/img/passed.png" alt="已過期">
+            <div class="relative">
+                <h2 class="absolute top-1/2 left-1/2 text-4xl -ml-16 -mt-5 font-medium text-white">已 過 期</h2>
+                @if ($pass_vcrs_count>0)
+                <div style="min-width: 10px;min-height: 10px;max-width: 33px;max-height: 33px;width: 8vw;height: 8vw;" class="absolute top-1/4 right-1/4 rounded-full flex justify-center items-center bg-color-third text-white font-medium -mt-1 -mr-1">
+                    {{$pass_vcrs_count}}
+                </div>
+                @endif
+                <img class="mt-2 w-10/12 h-auto mx-auto" src="/asset/img/voucher.jpg" alt="已過期">
+            </div>
+        </a>
+        {{-- 預購券 MemberPrebuyVouchersPage--}}
+        <a href="{{route('MemberPrebuyVouchersPage')}}">
+            <div class="relative">
+                <h2 class="absolute top-1/2 left-1/2 text-4xl -ml-16 -mt-5 font-medium text-white">預 購 券</h2>
+                @if ($prebuy_vcrs_count>0)
+                <div style="min-width: 10px;min-height: 10px;max-width: 33px;max-height: 33px;width: 8vw;height: 8vw;" class="absolute top-1/4 right-1/4 rounded-full flex justify-center items-center bg-color-third text-white font-medium -mt-1 -mr-1">
+                    {{$prebuy_vcrs_count}}
+                </div>
+                @endif
+                <img class="mt-2 w-10/12 h-auto mx-auto" src="/asset/img/voucher.jpg" alt="預購券">
+            </div>
         </a>
 
 

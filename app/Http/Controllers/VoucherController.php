@@ -40,6 +40,7 @@ class VoucherController extends Controller
             'start_at' => 'required',
             'end_at' => 'required|after:start_at',
             'amount' => 'required',
+            'type' => 'required',
             'description' => 'required',
         ],[
             'name.required' => ':attribute為必填',
@@ -47,6 +48,7 @@ class VoucherController extends Controller
             'end_at.required' => ':attribute為必填',
             'end_at.after' => ':attribute 需要大於 :date',
             'amount.required' => ':attribute為必填',
+            'type.required' => ':attribute為必填',
             'description.required' => ':attribute為必填',
   
         ],[
@@ -54,6 +56,7 @@ class VoucherController extends Controller
             'start_at' => '開始時間',
             'end_at' => '結束時間',
             'amount'=>'兌換券數量',
+            'type'=>'兌換券類型',
             'description'=>'兌換券內容',
         ]);
         // 新增至voucher表
@@ -62,6 +65,7 @@ class VoucherController extends Controller
             'start_at' =>  $validatedData['start_at'],
             'end_at' =>  $validatedData['end_at'],
             'amount' => $validatedData['amount'],
+            'type' =>  $validatedData['type'],
             'description' =>  $validatedData['description'],
         ]);
         if($request->user() && $request->user()->Staff){
@@ -137,6 +141,7 @@ class VoucherController extends Controller
         $data = [
             'voucher' => $voucher
         ];
+        // return $data;
         return view('admin.vouchers.VucherPage', $data);
     }
     // b0007 新增兌換券的購買方式

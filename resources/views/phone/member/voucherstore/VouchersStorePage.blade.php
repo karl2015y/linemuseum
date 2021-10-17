@@ -11,7 +11,12 @@
             <a href="{{route('VoucherStorePage', ['voucher_id'=>$voucher->id])}}">
                 <div class="p-4 border-solid border-t-2 border-gray-300">
                     <img class="w-72 h-72 mx-auto object-cover rounded-2xl shadow" src="{{$voucher->pic_1}}?t={{rand()}}" alt="">
-                    <h1 class="my-2">【{{$voucher->name}}】</h1>
+                    <div class="my-2 flex" >
+                        @if ($voucher->type=='pre')
+                            <div class="bg-color-third text-white px-1 font">預購</div>
+                        @endif
+                        <h1>【{{$voucher->name}}】</h1>
+                    </div>
                     <div class="my-1 ml-2 font-light text-sm text-color-third">剩餘數量 | <span class="text-2xl font-mono">{{$voucher->amount}}</span> 張</div>
                     <div class="mb-1 ml-2 font-light text-sm text-gray-400">開始時間 | {{$voucher->start_at}}({{$voucher->start_at->diffForHumans()}})</div>
                     <div class="my-1 ml-2 font-light text-sm text-gray-400">結束時間 | {{$voucher->end_at}}({{$voucher->end_at->diffForHumans()}})</div>

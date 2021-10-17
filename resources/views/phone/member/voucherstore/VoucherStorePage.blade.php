@@ -21,7 +21,12 @@
     <div class="p-4">
         <img class="w-72 h-72 mx-auto object-cover rounded-2xl shadow"
             src="{{$voucher->pic_1}}?t={{rand()}}" alt="">
-        <h1 class="my-2">【{{$voucher->name}}】</h1>
+        <div class="my-2 flex" >
+            @if ($voucher->type=='pre')
+                <div class="bg-color-third text-white px-1 font">預購</div>
+            @endif
+            <h1>【{{$voucher->name}}】</h1>
+        </div>
         <div class="my-1 ml-2 font-light text-sm text-color-third">剩餘數量｜<span class="text-2xl font-mono">{{$voucher->amount}}</span> 張
         </div>
         <div class="mb-1 ml-2 font-light text-sm">開始時間｜<span class="text-gray-400">{{$voucher->start_at}}({{$voucher->start_at->diffForHumans()}})</span></div>
@@ -33,10 +38,18 @@
         <div>
             @foreach ($voucher->VoucherWay as $vw)
                 @if ($vw->can_buy)
-                    <button onclick="buyVoucher('{{$vw->text}}', '{{route('BuyVoucher',['voucher_id'=>$voucher->id, 'voucher_way_id'=> $vw->id])}}')"
-                        class="w-10/12 mx-auto mt-4 py-2 px-6 text-white rounded bg-color-main shadow-md block md:inline-block">
-                        {{$vw->text}}
-                    </button>
+                    @if ($voucher->type=='pre')
+                        <button onclick="buyPreVoucher('{{route('BuyPreVoucherPage',['voucher_id'=>$voucher->id, 'voucher_way_id'=> $vw->id])}}')"
+                            class="w-10/12 mx-auto mt-4 py-2 px-6 text-white rounded bg-color-main shadow-md block md:inline-block">
+                            使用「{{$vw->text}}」預購
+                        </button>
+                    @else
+                        <button onclick="buyVoucher('{{$vw->text}}', '{{route('BuyVoucher',['voucher_id'=>$voucher->id, 'voucher_way_id'=> $vw->id])}}')"
+                            class="w-10/12 mx-auto mt-4 py-2 px-6 text-white rounded bg-color-main shadow-md block md:inline-block">
+                            {{$vw->text}}
+                        </button>
+                    @endif
+                    
                 @else
                     <button class="w-10/12 mx-auto mt-4 py-2 px-6 text-white rounded bg-gray-300 shadow-inner block md:inline-block">
                         {{$vw->text}} (點數不足)
@@ -95,6 +108,11 @@ const buyVoucher = (text, url)=>{
     document.querySelector("#model-content #model-text").innerText = `是否使用${text}購買本券?`
     document.querySelector("#model-content form").action = url
     modelToggle()
+}
+
+
+const buyPreVoucher = (url)=>{
+    location.href=url
 }
 </script>
 @stop

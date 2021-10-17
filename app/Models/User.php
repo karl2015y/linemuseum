@@ -60,4 +60,12 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Models\Member');
     }
+
+    /**
+     * 取得兌換券紀錄下的預購資料
+     */
+    public function PreVoucherRecord()
+    {
+        return $this->hasOne('App\Models\PreVoucherRecord', 'user_id')->orderBy('id', 'desc');
+    }
 }

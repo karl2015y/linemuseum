@@ -180,6 +180,15 @@ Route::middleware(CheckAdminIsLogin::class)->prefix('admin')->group(function () 
         Route::get('/knowledgepoint',  [DataController::class, 'KnowledgePointHistoryPage'])->name('KnowledgePointHistoryPage');
         // d0008 匯出知識點數發放列表
         Route::get('/knowledgepoint/export',  [DataController::class, 'KnowledgePointHistoryExport'])->name('KnowledgePointHistoryExport');
+        // d0009 預購卷列表頁
+        Route::get('/prebuy_vouchers',  [DataController::class, 'PrebuyVouchersHistoryPage'])->name('PrebuyVouchersHistoryPage');
+        // d0012 匯出全部預購卷
+        Route::get('/prebuy_vouchers/export',  [DataController::class, 'PrebuyVouchersAllExport'])->name('PrebuyVouchersAllExport');
+        Route::get('/prebuy_vouchers/export/onlyReady',  [DataController::class, 'PrebuyVouchersExport'])->name('PrebuyVouchersExport');
+        // d0010 已寄出預購卷頁
+        Route::get('/prebuy_vouchers/{pvr_id}',  [DataController::class, 'PrebuyVoucherPage'])->name('PrebuyVoucherPage');
+        // d0011 已寄出預購卷頁
+        Route::post('/prebuy_vouchers/{pvr_id}',  [DataController::class, 'PrebuyVoucher'])->name('PrebuyVoucher');
     });
 });
 // 館舍後台 MuseumAdminController
@@ -246,6 +255,11 @@ Route::middleware(CheckMemberIsLogin::class)->prefix('member')->group(function (
         Route::get('/{voucher_id}', [MemberController::class, 'VoucherStorePage'])->name('VoucherStorePage');
         // i0010 購買兌換券
         Route::post('/{voucher_id}/buy', [MemberController::class, 'BuyVoucher'])->name('BuyVoucher');
+
+        // 購買預購兌換券
+        Route::get('/{voucher_id}/prebuy', [MemberController::class, 'BuyPreVoucherPage'])->name('BuyPreVoucherPage');
+        // 購買預購兌換券
+        Route::post('/{voucher_id}/prebuy', [MemberController::class, 'BuyPreVoucher'])->name('BuyPreVoucher');
     });
 
     Route::prefix('myvoucher')->group(function () {
@@ -257,6 +271,8 @@ Route::middleware(CheckMemberIsLogin::class)->prefix('member')->group(function (
     Route::get('/passed', [MemberVoucherController::class, 'MemberPassedVouchersPage'])->name('MemberPassedVouchersPage');
     // i0014 我的未兌換兌換券列表頁
     Route::get('/cancel', [MemberVoucherController::class, 'MemberCanUseVouchersPage'])->name('MemberCanUseVouchersPage');
+    // 我的預購兌換券列表頁
+    Route::get('/prebuy', [MemberVoucherController::class, 'MemberPrebuyVouchersPage'])->name('MemberPrebuyVouchersPage');
     // i0015 我的兌換券詳細資料頁
     Route::get('/{voucher_record_id}', [MemberVoucherController::class, 'MemberVoucherPage'])->name('MemberVoucherPage');
     // i0016 兌換對換券頁

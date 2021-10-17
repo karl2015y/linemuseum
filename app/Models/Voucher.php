@@ -41,4 +41,11 @@ class Voucher extends Model
     {
         return $this->hasMany('App\Models\MemberUsedVoucherRecord');
     }
+    /**
+     * 取得預購券下的資料
+     */
+    public function PrebuyVoucherRecord()
+    {
+        return $this->hasMany('App\Models\PreVoucherRecord');
+    }
 }

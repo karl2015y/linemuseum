@@ -97,6 +97,14 @@
                             兌換券紀錄列表
                         </a>
                     </div>
+
+                    <div class="pl-3 bg-gray-50 hover:bg-green-400 hover:text-white @if ($RN=='PrebuyVouchersHistoryPage') rounded border-double border-2 @endif">
+                        <a href="{{route('PrebuyVouchersHistoryPage')}}"
+                            class="block py-2.5 px-4 rounded transition duration-200 ">
+                            預購券紀錄列表
+                        </a>
+                    </div>
+
                     <div class="pl-3 bg-gray-50 hover:bg-green-400 hover:text-white @if ($RN=='MembersPage') rounded border-double border-2 @endif">
                         <a href="{{route('MembersPage')}}"
                             class="block py-2.5 px-4 rounded transition duration-200">

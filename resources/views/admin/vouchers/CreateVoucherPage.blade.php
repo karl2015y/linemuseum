@@ -75,6 +75,17 @@
         </label>
     </div>
 
+    
+    {{-- 兌換券類型 --}}
+    <div class="pl-2.5 text-gray-500 ">兌換券類型 <span class="text-red-500 font-bold">*</span></div>
+        <label class="block text-left">
+            <select name="type" class="form-select block w-full mt-1 p-2 border border-solid rounded ">
+                <option value="normal">一般兌換券</option>
+                <option value="pre">早鳥預購券</option>
+            </select>
+        </label>
+    <br>
+
     {{-- 兌換券內容 --}}
     <div class="pl-2.5 text-gray-500 ">兌換券內容 <span class="text-red-500 font-bold">*</span></div>
     <textarea class="hidden" id="textarea_description" name="description">{{ old('description') }}</textarea>

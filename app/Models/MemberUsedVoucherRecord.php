@@ -12,6 +12,7 @@ class MemberUsedVoucherRecord extends Model
     protected $dates = [
         'start_at',
         'end_at',
+        'pvr_updated_at'
     ];
     /**
      * 所屬兌換券
@@ -34,5 +35,12 @@ class MemberUsedVoucherRecord extends Model
     public function VoucherRecordStatus()
     {
         return $this->hasOne('App\Models\VoucherRecordStatus', 'voucher_record_id')->orderBy('id', 'desc');
+    }
+    /**
+     * 取得兌換券紀錄下的預購資料
+     */
+    public function PreVoucherRecord()
+    {
+        return $this->hasOne('App\Models\PreVoucherRecord', 'voucher_record_id')->orderBy('id', 'desc');
     }
 }
