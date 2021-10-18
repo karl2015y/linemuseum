@@ -13,7 +13,7 @@
                 <h2 class="absolute top-1/2 left-1/2 text-4xl -ml-16 -mt-5 font-medium text-white">未 兌 換</h2>
                 @if ($unused_vcrs_count>0)
                 <div style="min-width: 10px;min-height: 10px;max-width: 33px;max-height: 33px;width: 8vw;height: 8vw;" class="text-center absolute top-1/4 right-1/4 rounded-full flex justify-center items-center bg-color-third text-white font-medium -mt-1 -mr-1">
-                    {{$unused_vcrs_count}}
+                    <span>{{$unused_vcrs_count}}</span>
                 </div>
                 @endif
                 <img class="mt-2 w-10/12 h-auto mx-auto" src="/asset/img/voucher.jpg" alt="未兌換">
@@ -25,7 +25,7 @@
                 <h2 class="absolute top-1/2 left-1/2 text-4xl -ml-16 -mt-5 font-medium text-white">預 購 券</h2>
                 @if ($prebuy_vcrs_count>0)
                 <div style="min-width: 10px;min-height: 10px;max-width: 33px;max-height: 33px;width: 8vw;height: 8vw;" class="text-center absolute top-1/4 right-1/4 rounded-full flex justify-center items-center bg-color-third text-white font-medium -mt-1 -mr-1">
-                    {{$prebuy_vcrs_count}}
+                    <span>{{$prebuy_vcrs_count}}</span>
                 </div>
                 @endif
                 <img class="mt-2 w-10/12 h-auto mx-auto" src="/asset/img/voucher.jpg" alt="預購券">
