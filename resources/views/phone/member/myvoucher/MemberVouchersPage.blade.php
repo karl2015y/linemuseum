@@ -19,6 +19,18 @@
                 <img class="mt-2 w-10/12 h-auto mx-auto" src="/asset/img/voucher.jpg" alt="未兌換">
             </div>
         </a>
+        {{-- 預購券 MemberPrebuyVouchersPage--}}
+        <a href="{{route('MemberPrebuyVouchersPage')}}">
+            <div class="relative">
+                <h2 class="absolute top-1/2 left-1/2 text-4xl -ml-16 -mt-5 font-medium text-white">預 購 券</h2>
+                @if ($prebuy_vcrs_count>0)
+                <div style="min-width: 10px;min-height: 10px;max-width: 33px;max-height: 33px;width: 8vw;height: 8vw;" class="absolute top-1/4 right-1/4 rounded-full flex justify-center items-center bg-color-third text-white font-medium -mt-1 -mr-1">
+                    {{$prebuy_vcrs_count}}
+                </div>
+                @endif
+                <img class="mt-2 w-10/12 h-auto mx-auto" src="/asset/img/voucher.jpg" alt="預購券">
+            </div>
+        </a>
         {{-- 已兌換 MemberUsedVouchersPage--}}
         <a href="{{route('MemberUsedVouchersPage')}}">
             <div class="relative">
@@ -43,18 +55,7 @@
                 <img class="mt-2 w-10/12 h-auto mx-auto" src="/asset/img/voucher.jpg" alt="已過期">
             </div>
         </a>
-        {{-- 預購券 MemberPrebuyVouchersPage--}}
-        <a href="{{route('MemberPrebuyVouchersPage')}}">
-            <div class="relative">
-                <h2 class="absolute top-1/2 left-1/2 text-4xl -ml-16 -mt-5 font-medium text-white">預 購 券</h2>
-                @if ($prebuy_vcrs_count>0)
-                <div style="min-width: 10px;min-height: 10px;max-width: 33px;max-height: 33px;width: 8vw;height: 8vw;" class="absolute top-1/4 right-1/4 rounded-full flex justify-center items-center bg-color-third text-white font-medium -mt-1 -mr-1">
-                    {{$prebuy_vcrs_count}}
-                </div>
-                @endif
-                <img class="mt-2 w-10/12 h-auto mx-auto" src="/asset/img/voucher.jpg" alt="預購券">
-            </div>
-        </a>
+
 
 
     </div>
