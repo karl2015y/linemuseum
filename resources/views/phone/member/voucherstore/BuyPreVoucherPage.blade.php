@@ -187,7 +187,7 @@
     address:"",
     name:"",
     phone:"",
-    email:"",
+    email:"{{$user->email}}",
     prebuy:{
         name:'{!!$voucher->name!!}',
         need_point:'{{$voucher_way->text}}',
@@ -220,7 +220,7 @@
             this.address = "";
             this.name = "";
             this.phone = "";
-            this.email = "";
+            this.email = "{{$user->email}}";
         }
 
     }

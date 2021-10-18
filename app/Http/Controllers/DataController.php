@@ -171,13 +171,15 @@ class DataController extends Controller
             'title' => '藝點通預購通知',
             'member_note' =>$validatedData['member_note'],
         ];
-        if($PVR_data['email']==$request->user()->email){
-            \Illuminate\Support\Facades\Mail::to($PVR_data['email'])->send(new \App\Mail\PrebuyMail($details));
-        }else{
-            \Illuminate\Support\Facades\Mail::to($PVR_data['email'])->send(new \App\Mail\PrebuyMail($details));
-            \Illuminate\Support\Facades\Mail::to($request->user()->email)->send(new \App\Mail\PrebuyMail($details));
+        \Illuminate\Support\Facades\Mail::to($PVR_data['email'])->send(new \App\Mail\PrebuyMail($details));
+        
+        // if($PVR_data['email']==$request->user()->email){
+        //     \Illuminate\Support\Facades\Mail::to($PVR_data['email'])->send(new \App\Mail\PrebuyMail($details));
+        // }else{
+        //     \Illuminate\Support\Facades\Mail::to($PVR_data['email'])->send(new \App\Mail\PrebuyMail($details));
+        //     \Illuminate\Support\Facades\Mail::to($PVR_data->User->email)->send(new \App\Mail\PrebuyMail($details));
 
-        }
+        // }
 
 
         $message_title = "寄出成功";

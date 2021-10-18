@@ -446,7 +446,8 @@ class MemberController extends Controller
         $datas = [
             'voucher' => $voucher,
             'voucher_way' => $voucher_way,
-            'last_PVR' =>$request->user()->PreVoucherRecord()->first()
+            'last_PVR' =>$request->user()->PreVoucherRecord()->first(),
+            'user' => $request->user()
         ];
         // return $datas;
         return view('phone.member.voucherstore.BuyPreVoucherPage', $datas);

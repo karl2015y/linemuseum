@@ -23,4 +23,12 @@ class PreVoucherRecord extends Model
     {
         return $this->belongsTo('App\Models\MemberUsedVoucherRecord', 'voucher_record_id');
     }
+
+    /**
+     * 購買人
+     */
+    public function User()
+    {
+        return $this->belongsTo('App\Models\Staff', 'user_id');
+    }
 }

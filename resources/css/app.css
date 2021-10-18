@@ -72,7 +72,7 @@ table {
 
 .h-100 {
     height: 100vh; /*給 Safari 以外的瀏覽器讀取*/
-    height: calc(var(--vh, 1vh) * 100);
+    height: calc(var(--vh, 1vh) * 95);
 }
 
 @tailwind base;
