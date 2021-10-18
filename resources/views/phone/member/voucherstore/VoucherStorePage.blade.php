@@ -1,5 +1,5 @@
 @extends('phone.layout.type2')
-@section('title', '兌換卷商店')
+@section('title', '兌換卷商店-'.{{$voucher->name}})
 @section('content')
 {{-- topbar --}}
 <div id="toptitle" class="relative text-center  pb-2 pt-12 bg-color-sec">
