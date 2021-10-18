@@ -65,6 +65,7 @@ class MemberVoucherController extends Controller
             ->with('PreVoucherRecord')
             ->get()
             ->where('PreVoucherRecord', '<>', null)
+            ->where('PreVoucherRecord.current_status', '=', '準備中')
             ->where('Voucher.type', '=', 'pre')->count();
 
         $datas = [
@@ -158,7 +159,8 @@ class MemberVoucherController extends Controller
             ->with('PreVoucherRecord')
             ->get()
             ->where('PreVoucherRecord', '<>', null)
-            ->where('Voucher.type', '=', 'pre');
+            ->where('Voucher.type', '=', 'pre')
+            ->sortByDesc('PreVoucherRecord.current_status');
         $datas = [
             'vcrs' => $vcrs
         ];
