@@ -98,9 +98,9 @@
   <thead class="text-gray-100 bg-gray-400">
     <tr>
       <th class="py-0.5">#</th>
-      <th>人員名稱</th>
+      <th>知識點活動名稱</th>
       <th>建立時間</th>
-      <th>人員狀態</th>
+      <th>知識點活動狀態</th>
       <th>建立人員</th>
       <th>操作</th>
     </tr>

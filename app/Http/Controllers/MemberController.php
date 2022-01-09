@@ -179,9 +179,9 @@ class MemberController extends Controller
         ]);
         // 確認是否存在在Member表裡
         if (Member::where('email', $validatedData['email'])->first()) {
-            $message_title = "註冊失敗";
-            $message_type = "error";
-            $message = "此email已註冊過";
+            $message_title = "小提示-重複註冊";
+            $message_type = "warning";
+            $message = "此email已註冊過，去Email驗證後直接登入吧";
             return redirect()->route('MemberRegisterPage')
                 ->with('message_title', $message_title)
                 ->with('message_type', $message_type)

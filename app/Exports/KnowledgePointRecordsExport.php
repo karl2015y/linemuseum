@@ -24,14 +24,15 @@ class KnowledgePointRecordsExport implements FromCollection, WithHeadings, WithM
     {
         if ($KPR->knowledge_activity_id) {
             return [
-                $KPR->knowledge_activity_id,
-                $KPR->knowledge_activity_name,
+                $KPR->member_id,
+                $KPR->member_name,
 
                 $KPR->KnowledgeActivity->Museum->id,
                 $KPR->KnowledgeActivity->Museum->name,
 
-                $KPR->member_id,
-                $KPR->member_name,
+                $KPR->knowledge_activity_id,
+                $KPR->knowledge_activity_name,
+                
                 $KPR->point,
                 $KPR->created_at->toDateTimeString(),
 

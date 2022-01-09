@@ -69,9 +69,9 @@
   <thead class="text-gray-100 bg-gray-400">
     <tr>
       <th class="py-0.5">#</th>
-      <th>人員名稱</th>
+      <th>館舍名稱</th>
       <th>建立時間</th>
-      <th>人員狀態</th>
+      <th>館舍狀態</th>
       <th>建立人員</th>
       <th>操作</th>
     </tr>
@@ -82,7 +82,7 @@
       <td class="p-3">
         {{ $museum->id }}
       </td>
-      {{-- 人員名稱	 --}}
+      {{-- 館舍名稱 --}}
       <td class="p-3">
         <div class="flex align-items-center">
           <div class="ml-3">
@@ -97,7 +97,7 @@
           {{ $museum->created_at->diffForHumans() }}
         </div>
       </td>
-      {{-- 人員狀態 --}}
+      {{-- 館舍狀態 --}}
       <td class="p-3 text-center">
         @if($museum['status']=='enable')
         <span class="bg-green-400 text-gray-50 rounded-md px-2">正常</span>
