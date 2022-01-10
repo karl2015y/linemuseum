@@ -66,7 +66,8 @@
 
             {{-- 民眾性別 --}}
             <td class="p-3 text-center">
-                {{ $member->gender=='male'?'男':'女' }}
+                {{-- {{ $member->gender=='male'?'男':'女' }} --}}
+                {{ $member->gender=='male'?'男': (($member->gender=='female')?'女':($member->gender)) }}
             </td>
             {{-- 出生年月 --}}
             <td class="p-3 text-center">

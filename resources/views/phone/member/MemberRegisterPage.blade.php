@@ -38,12 +38,20 @@
 
         <div class="mt-6 text-gray-500"><span class="text-sm text-red-500">* </span>性別</div>
         <div class="pl-3 mt-2">
-            <input value="male" type="radio" name="gender" id="gender_male" {{old('gender')=='male'?'checked':''}}>
+            <input value="男" type="radio" id="gender_male" name="gender_radio" {{old('gender')?(old('gender')=='男'?'checked':''):'checked'}}>
             <label for="gender_male">男</label>
             &emsp;
-            <input value="female" type="radio" name="gender" id="gender_female"
-                {{old('gender')=='female'?'checked':''}}>
+            <input value="女" type="radio" id="gender_female" name="gender_radio" {{old('gender')=='女'?'checked':''}}>
             <label for="gender_female">女</label>
+            &emsp;
+            <input value="其他" type="radio" id="gender_else" name="gender_radio" {{(old('gender')!=''&&old('gender')!='男'&&old('gender')!='女'&&old('gender')!='不願透露')?'checked':''}}>
+            <label for="gender_else">其他</label>
+            &emsp;
+            <input value="不願透露" type="radio" id="gender_secret" name="gender_radio"  {{old('gender')=='不願透露'?'checked':''}}>
+            <label for="gender_secret">不願透露</label>
+
+            <input  id="gender_text" value="{{old('gender')}}" type="text" name="gender" placeholder="請輸入您的性別" class="hidden mt-2 bg-gray-100 rounded p-1 shadow-inner w-full"
+            type="text">
         </div>
 
         <div class="mt-5 text-gray-500"><span class="text-sm text-red-500">* </span>出生年月</div>
@@ -427,5 +435,24 @@
             _rem_div.classList.add('hidden');
         }
     })
+
+
+    // 性別
+    document.querySelectorAll('input[name="gender_radio"]').forEach((elem) => {
+        elem.addEventListener("change", function(event) {
+            var value = event.target.value;
+            const gender_text = document.querySelector('input[name="gender"]');
+            if(value=='其他'){
+                gender_text.classList.remove('hidden');
+                gender_text.value=""
+            }else{
+                gender_text.classList.add('hidden');
+                gender_text.value=value
+            }
+        });
+    });
+    if( document.querySelector('input[name="gender_radio"]:checked').value=='其他'){
+        document.querySelector('input[name="gender"]').classList.remove('hidden');
+    }
 </script>
 @stop

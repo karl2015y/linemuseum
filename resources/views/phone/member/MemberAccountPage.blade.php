@@ -12,7 +12,8 @@
     <div class="px-8 flex flex-col justify-around h-3/4">
         <div class="text-gray-500 text-xl font-light">
             <div class="mb-1">名稱/暱稱｜{{$member->name}}</div>
-            <div class="mb-1">性&emsp;&emsp;別&thinsp;&thinsp;｜{{$member->gender=='male'?'男':'女'}}</div>
+            {{-- <div class="mb-1">性&emsp;&emsp;別&thinsp;&thinsp;｜{{$member->gender=='male'?'男':'女'}}</div> --}}
+            <div class="mb-1">性&emsp;&emsp;別&thinsp;&thinsp;｜{{$member->gender=='male'?'男': (($member->gender=='female')?'女':($member->gender))}}</div>
             <div class="mb-1">出生年月&thinsp;&thinsp;｜{{$member->year}} 年 {{$member->month}} 月</div>
             <div class="mb-1">居住區域&thinsp;&thinsp;｜{{$member->address_region}}</div>
             <div class="mb-1">電子信箱&thinsp;&thinsp;｜{{$member->email}}</div>

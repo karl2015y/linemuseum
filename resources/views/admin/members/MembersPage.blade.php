@@ -47,7 +47,8 @@
             </td>
             {{-- 民眾性別 --}}
             <td class="p-3 text-center">
-                {{ $member->gender=='male'?'男':'女' }}
+                {{-- {{ $member->gender=='male'?'男':'女' }} --}}
+                {{ $member->gender=='male'?'男': (($member->gender=='female')?'女':($member->gender))}}
             </td>
             {{-- 連絡電話 --}}
             <td class="p-3 text-center">

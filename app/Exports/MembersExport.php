@@ -38,7 +38,7 @@ class MembersExport implements FromCollection, WithHeadings, WithMapping
             $member->name,
             $member->email,
             $member->phone,
-            $member->gender=='male'?'男':'女',
+            $member->gender=='male'?'男': (($member->gender=='female')?'女':($member->gender)),
             "{$member->year}年{$member->month}月",
             $member->address_region,
             $member->recommend_museum,
