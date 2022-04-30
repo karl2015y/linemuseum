@@ -84,16 +84,20 @@
         </div>
         @else
         <div class="mt-1 ml-2 font-light text-sm">收件人資料</div>
-        <div class="border-solid border-b border-gray-200 pb-2">
+        <div class="pb-2">
             <div class="my-1 ml-6 font-light text-sm text-gray-400">名稱：
-                    {{$vcr->PreVoucherRecord->name}}</div>
+                {{$vcr->PreVoucherRecord->name}}</div>
             <div class="my-1 ml-6 font-light text-sm text-gray-400">地址：
-                    {{$vcr->PreVoucherRecord->address}}</div>
+                {{$vcr->PreVoucherRecord->address}}</div>
             <div class="my-1 ml-6 font-light text-sm text-gray-400">電話：
-                    {{$vcr->PreVoucherRecord->phone}}</div>
+                {{$vcr->PreVoucherRecord->phone}}</div>
             <div class="my-1 ml-6 font-light text-sm text-gray-400">Email：
-                    {{$vcr->PreVoucherRecord->email}}</div>
+                {{$vcr->PreVoucherRecord->email}}</div>
         </div>
+        <button onclick="updateAlert()"
+            class="text-center w-full py-2 px-6 text-white rounded bg-color-main shadow block md:inline-block">修改收件人資料
+        </button>
+        <div class="border-solid border-b pb-2 border-gray-200 "></div>
         @endif
         @endif
         <div class="mt-1 ml-2 font-light text-sm">兌換券說明｜</div>
@@ -122,23 +126,38 @@
 
 @section('js-content')
 <script>
-    const _scrolldiv = document.querySelector("#scrolldiv")
-const _toptitle = document.querySelector("#toptitle")
-const _toptitleSpace = document.querySelector("#toptitleSpace")
-_scrolldiv.addEventListener('scroll',(e)=>{
-    if(_scrolldiv.scrollTop>=_toptitle.clientHeight/2){
-        _toptitle.className = "bg-color-sec fixed py-2 shadow text-center top-0 w-full"
-        _toptitleSpace.classList.remove('hidden')
-    }else{
-        _toptitle.className = "relative text-center  pb-2 pt-12 bg-color-sec"
-        _toptitleSpace.classList.add('hidden')
+    const updateAlert = ()=>{
+        Swal.fire({
+        title: '是否修改收件人資料？',
+        text: '修改後，會重新計算寄件日期，延後收件時間喔。',
+        showCancelButton: true,
+        confirmButtonText: '是',
+        cancelButtonText: `否`,
+        }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+            window.location.href+="/prebuy"
+        }
+        })
     }
-})
 
-const buyVoucher = (text, url)=>{
-    document.querySelector("#model-content #model-text").innerText = `是否使用${text}購買本券?`
-    document.querySelector("#model-content form").action = url
-    modelToggle()
-}
+    const _scrolldiv = document.querySelector("#scrolldiv")
+    const _toptitle = document.querySelector("#toptitle")
+    const _toptitleSpace = document.querySelector("#toptitleSpace")
+    _scrolldiv.addEventListener('scroll',(e)=>{
+        if(_scrolldiv.scrollTop>=_toptitle.clientHeight/2){
+            _toptitle.className = "bg-color-sec fixed py-2 shadow text-center top-0 w-full"
+            _toptitleSpace.classList.remove('hidden')
+        }else{
+            _toptitle.className = "relative text-center  pb-2 pt-12 bg-color-sec"
+            _toptitleSpace.classList.add('hidden')
+        }
+    })
+
+    const buyVoucher = (text, url)=>{
+        document.querySelector("#model-content #model-text").innerText = `是否使用${text}購買本券?`
+        document.querySelector("#model-content form").action = url
+        modelToggle()
+    }
 </script>
 @stop

@@ -223,7 +223,7 @@ Route::middleware(CheckShopIsLogin::class)->prefix('shop')->group(function () {
 });
 // 民眾端 MemberController
 Route::middleware(CheckMemberIsLogin::class)->prefix('member')->group(function () {
-       // h0001 民眾登入頁
+    // h0001 民眾登入頁
     Route::get('/login', [MemberController::class, 'MemberLoginPage'])->name('MemberLoginPage');
     // h0002 登入驗證
     Route::post('/login', [MemberController::class, 'MemberLogin'])->name('MemberLogin');
@@ -263,35 +263,38 @@ Route::middleware(CheckMemberIsLogin::class)->prefix('member')->group(function (
     });
 
     Route::prefix('myvoucher')->group(function () {
-    // i0011 我的兌換券頁
-    Route::get('/', [MemberVoucherController::class, 'MemberVouchersPage'])->name('MemberVouchersPage');
-    // i0012 我的已兌換兌換券列表頁
-    Route::get('/used', [MemberVoucherController::class, 'MemberUsedVouchersPage'])->name('MemberUsedVouchersPage');
-    // i0013 我的已過期兌換券列表頁
-    Route::get('/passed', [MemberVoucherController::class, 'MemberPassedVouchersPage'])->name('MemberPassedVouchersPage');
-    // i0014 我的未兌換兌換券列表頁
-    Route::get('/cancel', [MemberVoucherController::class, 'MemberCanUseVouchersPage'])->name('MemberCanUseVouchersPage');
-    // 我的預購兌換券列表頁
-    Route::get('/prebuy', [MemberVoucherController::class, 'MemberPrebuyVouchersPage'])->name('MemberPrebuyVouchersPage');
-    // i0015 我的兌換券詳細資料頁
-    Route::get('/{voucher_record_id}', [MemberVoucherController::class, 'MemberVoucherPage'])->name('MemberVoucherPage');
-    // i0016 兌換對換券頁
-    Route::get('/{voucher_record_id}/useVoucher', [MemberVoucherController::class, 'MemberUseVoucherPage'])->name('MemberUseVoucherPage');
-    // i0017 兌換對換券
-    Route::post('/{voucher_record_id}/useVoucher', [MemberVoucherController::class, 'MemberUseVoucher'])->name('MemberUseVoucher');
+        // i0011 我的兌換券頁
+        Route::get('/', [MemberVoucherController::class, 'MemberVouchersPage'])->name('MemberVouchersPage');
+        // i0012 我的已兌換兌換券列表頁
+        Route::get('/used', [MemberVoucherController::class, 'MemberUsedVouchersPage'])->name('MemberUsedVouchersPage');
+        // i0013 我的已過期兌換券列表頁
+        Route::get('/passed', [MemberVoucherController::class, 'MemberPassedVouchersPage'])->name('MemberPassedVouchersPage');
+        // i0014 我的未兌換兌換券列表頁
+        Route::get('/cancel', [MemberVoucherController::class, 'MemberCanUseVouchersPage'])->name('MemberCanUseVouchersPage');
+        // 我的預購兌換券列表頁
+        Route::get('/prebuy', [MemberVoucherController::class, 'MemberPrebuyVouchersPage'])->name('MemberPrebuyVouchersPage');
+        // i0015 我的兌換券詳細資料頁
+        Route::get('/{voucher_record_id}', [MemberVoucherController::class, 'MemberVoucherPage'])->name('MemberVoucherPage');
+        // 修改預購兌換券
+        Route::get('/{voucher_record_id}/prebuy', [MemberVoucherController::class, 'UpdatePrebuyVoucherPage'])->name('UpdatePrebuyVoucherPage');
+        // 修改預購兌換券
+        Route::put('/{voucher_record_id}/prebuy', [MemberVoucherController::class, 'UpdatePrebuyVoucher'])->name('UpdatePrebuyVoucher');
+        // i0016 兌換對換券頁
+        Route::get('/{voucher_record_id}/useVoucher', [MemberVoucherController::class, 'MemberUseVoucherPage'])->name('MemberUseVoucherPage');
+        // i0017 兌換對換券
+        Route::post('/{voucher_record_id}/useVoucher', [MemberVoucherController::class, 'MemberUseVoucher'])->name('MemberUseVoucher');
     });
-
 });
 
 // Qrcode
 Route::get('point/{uuid}', [PointController::class, 'getPoint'])->name('QrcodeGetPoint');
 
 
- // 民眾驗證信箱
- Route::get('/verify/{member_id}/{created_at}', [MemberController::class, 'MemberVerifyMail'])->name('MemberVerifyMail');
- // 重設密碼
- Route::get('/resetpw/{member_id}/{created_at}', [MemberController::class, 'MemberResetPasswordPage'])->name('MemberResetPasswordPage');
- Route::post('/resetpw/{member_id}/{created_at}', [MemberController::class, 'MemberResetPassword'])->name('MemberResetPassword');
+// 民眾驗證信箱
+Route::get('/verify/{member_id}/{created_at}', [MemberController::class, 'MemberVerifyMail'])->name('MemberVerifyMail');
+// 重設密碼
+Route::get('/resetpw/{member_id}/{created_at}', [MemberController::class, 'MemberResetPasswordPage'])->name('MemberResetPasswordPage');
+Route::post('/resetpw/{member_id}/{created_at}', [MemberController::class, 'MemberResetPassword'])->name('MemberResetPassword');
 
 Route::get('register', [LoginController::class, 'signup']);
 Route::get('login', [LoginController::class, 'authenticate']);

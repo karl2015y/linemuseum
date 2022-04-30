@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Models\PreVoucherRecord;
 
 
 class MemberVoucherController extends Controller
@@ -21,7 +22,7 @@ class MemberVoucherController extends Controller
             ->get()
             ->where('Voucher.type', '=', 'normal')
             ->where('VoucherRecordStatus.status', '=', 'used')->count();
-        
+
 
 
         // 已過期兌換券列數量
@@ -77,7 +78,7 @@ class MemberVoucherController extends Controller
 
         // return $datas;
 
-        return view('phone.member.myvoucher.MemberVouchersPage',$datas);
+        return view('phone.member.myvoucher.MemberVouchersPage', $datas);
     }
     // i0012 我的已兌換兌換券列表頁
     public function MemberUsedVouchersPage(Request $request)
@@ -186,9 +187,9 @@ class MemberVoucherController extends Controller
                 ->with('message_type', $message_type)
                 ->with('message', $message);
         }
-        if($vcr->Voucher->type=='pre'){
+        if ($vcr->Voucher->type == 'pre') {
             $vcr_status = 'pre';
-        }else{
+        } else {
             if ($vcr->VoucherRecordStatus->status == 'used') {
                 $vcr_status = 'used';
             } else if ($vcr->end_at > $now && $vcr->VoucherRecordStatus->status == 'unused') {
@@ -273,5 +274,64 @@ class MemberVoucherController extends Controller
         ];
 
         return view('phone.member.myvoucher.MemberUseVoucherTimePage', $datas);
+    }
+
+
+    public function UpdatePrebuyVoucherPage($voucher_record_id, Request $request)
+    {
+        $member = $request->user()->member;
+        $vcr = $member->VoucherRecord()->where('id', $voucher_record_id)->first();
+        $PreVoucherRecord = $vcr->PreVoucherRecord()->first();
+        $datas = [
+            'PreVoucherRecord' => $PreVoucherRecord
+        ];
+        // return $datas;
+        return view('phone.member.myvoucher.MemberEditPreVoucherPage', $datas);
+
+    }
+
+    public function UpdatePrebuyVoucher($voucher_record_id, Request $request)
+    {
+        // 驗證傳入的數據
+        $validatedData =  $request->validate([
+            'name' => 'required',
+            'phone' => 'required',
+            'email' => 'required|email',
+            'address' => 'required',
+        ], [
+            'name.required' => ':attribute為必填',
+            'phone.required' => ':attribute為必填',
+            'email.required' => ':attribute為必填',
+            'address.required' => ':attribute為必填',
+            'email.email' => ':attribute格式不對',
+        ], [
+            'name' => '收件人姓名',
+            'phone' => '收件人手機號碼',
+            'email' => '電子信箱',
+            'addressl' => '完整收件地址',
+        ]);
+
+        $member = $request->user()->member;
+        $vcr = $member->VoucherRecord()->where('id', $voucher_record_id)->first();
+        $PreVoucherRecord = $vcr->PreVoucherRecord()->first();
+
+        $PVR = PreVoucherRecord::where("id", $PreVoucherRecord->id);
+        $PVR_data = $PVR->first();
+        $PVR->update([
+            'name' => $validatedData['name'],
+            'phone' => $validatedData['phone'],
+            'email' => $validatedData['email'],
+            'address' => $validatedData['address'],
+            'status_list' => '<li>' . Carbon::now() . ' -> 已修改訂單資料</li>' . $PVR_data['status_list'],
+        ]);
+
+
+        $message_title = "成功";
+        $message_type = "success";
+        $message = "已修改訂單資訊";
+        return redirect()->back()
+            ->with('message_title', $message_title)
+            ->with('message_type', $message_type)
+            ->with('message', $message);
     }
 }
