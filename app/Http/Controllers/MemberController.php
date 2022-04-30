@@ -454,6 +454,27 @@ class MemberController extends Controller
     }
     // 購買預購兌換券頁
     public function BuyPreVoucher($voucher_id, Request $request){
+
+        // 驗證傳入的數據
+        $request->validate([
+            'name' => 'required',
+            'phone' => 'required',
+            'email' => 'required|email',
+            'address' => 'required',
+        ], [
+            'name.required' => ':attribute為必填',
+            'phone.required' => ':attribute為必填',
+            'email.required' => ':attribute為必填',
+            'address.required' => ':attribute為必填',
+            'email.email' => ':attribute格式不對',
+        ], [
+            'name' => '收件人姓名',
+            'phone' => '收件人手機號碼',
+            'email' => '電子信箱',
+            'addressl' => '完整收件地址',
+        ]);
+
+
         $member = $request->user()->member;
         $now = Carbon::now();
         $vw_id = $request->input('voucher_way_id');
@@ -498,23 +519,7 @@ class MemberController extends Controller
         ]);
         $vcr->VoucherRecordStatus()->create();
         
-        // 驗證傳入的數據
-        $validatedData = $request->validate([
-            'name' => 'required',
-            'phone' => 'required',
-            'email' => 'required',
-            'address' => 'required',
-        ], [
-            'name.required' => ':attribute為必填',
-            'phone.required' => ':attribute為必填',
-            'email.required' => ':attribute為必填',
-            'address.required' => ':attribute為必填',
-        ], [
-            'name' => '收件人姓名',
-            'phone' => '收件人手機號碼',
-            'emai' => '電子信箱',
-            'addressl' => '完整收件地址',
-        ]);
+
         $vcr->PreVoucherRecord()->create([
             'name' => $request->input('name'),
             'phone' => $request->input('phone'),

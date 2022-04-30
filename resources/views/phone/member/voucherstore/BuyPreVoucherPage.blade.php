@@ -43,20 +43,20 @@
             {{-- 收件人姓名 --}}
             <div>
                 <div class="mt-6 text-gray-500"><span class="text-sm text-red-500">* </span>收件人姓名</div>
-                <input placeholder="請輸入收件人姓名" v-model="name" class="mt-2 bg-gray-100 rounded p-1 shadow-inner w-full"
-                    type="text">
+                <input required placeholder="請輸入收件人姓名" v-model="name"
+                    class="mt-2 bg-gray-100 rounded p-1 shadow-inner w-full" type="text">
             </div>
             {{-- 收件人手機號碼 --}}
             <div>
                 <div class="mt-3 text-gray-500"><span class="text-sm text-red-500">* </span>收件人手機號碼</div>
-                <input placeholder="請輸入收件人手機號碼" v-model="phone" class="mt-2 bg-gray-100 rounded p-1 shadow-inner w-full"
-                    type="text">
+                <input required placeholder="請輸入收件人手機號碼" v-model="phone"
+                    class="mt-2 bg-gray-100 rounded p-1 shadow-inner w-full" type="text">
             </div>
             {{-- 電子信箱 --}}
             <div>
                 <div class="mt-3 text-gray-500"><span class="text-sm text-red-500">* </span>電子信箱</div>
-                <input placeholder="請輸入電子信箱" v-model="email" class="mt-2 bg-gray-100 rounded p-1 shadow-inner w-full"
-                    type="email">
+                <input required placeholder="請輸入電子信箱" v-model="email"
+                    class="mt-2 bg-gray-100 rounded p-1 shadow-inner w-full" type="email">
             </div>
             {{-- 請輸入完整收件地址 --}}
             <div>
@@ -78,7 +78,7 @@
                         </option>
                     </select>
                 </div>
-                <input ref="addressInputTxt" placeholder="完整收件地址" v-model="address" name="address"
+                <input required ref="addressInputTxt" placeholder="完整收件地址" v-model="address" name="address"
                     class="mt-2 bg-gray-100 rounded p-1 shadow-inner w-full" type="text">
 
             </div>
@@ -107,8 +107,7 @@
                 <h2 class="text-xl text-color-main font my-3">預購商品</h2>
                 <div class="flex bg-gray-50 py-6 rounded shadow">
                     <div class="mx-3">
-                        <img class="w-36 h-36 mx-auto object-cover rounded-2xl shadow"
-                        :src="prebuy.img" alt=""/>
+                        <img class="w-36 h-36 mx-auto object-cover rounded-2xl shadow" :src="prebuy.img" alt="" />
                     </div>
                     <div class="-mt-1">
                         <h3 class="text-gray-500">商品名稱</h3>
@@ -124,7 +123,8 @@
             <div>
                 <h2 class="text-xl text-color-main font my-3">收件資料</h2>
                 <div class="text-xl font-light">
-                    <div class="mb-1">收&thinsp;&thinsp;&thinsp;件&thinsp;&thinsp;&thinsp;人&thinsp;｜<span class="text-gray-500">@{{name}}</span></div>
+                    <div class="mb-1">收&thinsp;&thinsp;&thinsp;件&thinsp;&thinsp;&thinsp;人&thinsp;｜<span
+                            class="text-gray-500">@{{name}}</span></div>
                     <div class="mb-1">手&emsp;&emsp;機&thinsp;&thinsp;｜<span>@{{phone}}</span></div>
                     <div class="mb-1">收件地址&thinsp;&thinsp;｜<span>@{{address}}</span></div>
                     <div class="mb-1">電子信箱&thinsp;&thinsp;｜<span>@{{email}}</span></div>
@@ -139,9 +139,9 @@
                 <input type="hidden" name="phone" v-model="phone">
                 <input type="hidden" name="address" v-model="address">
                 <input type="hidden" name="email" v-model="email">
-            <button 
-                class="w-10/12 mx-auto mt-16 py-2 px-6 text-white rounded bg-color-main shadow block md:inline-block">確
-                認 送 出</button>                
+                <button
+                    class="w-10/12 mx-auto mt-16 py-2 px-6 text-white rounded bg-color-main shadow block md:inline-block">確
+                    認 送 出</button>
             </form>
 
             <button @click="step--"
@@ -184,10 +184,10 @@
         email:null,
         /*@endif*/
     },
-    address:"",
-    name:"",
-    phone:"",
-    email:"{{$user->email}}",
+    address:"{{old('address','')}}",
+    name:"{{old('name','')}}",
+    phone:"{{old('phone','')}}",
+    email:"{{ old('email',$user->email) }}",
     prebuy:{
         name:'{!!$voucher->name!!}',
         need_point:'{{$voucher_way->text}}',
@@ -238,6 +238,42 @@
             }, 1);    
         }
     },
+    step: function(val){
+        if(val==2){
+            const vm = this;
+            let errorText = ""
+            if(vm.name ==''){
+                errorText='請輸入收件人姓名'
+            }
+            else if(vm.phone ==''){
+                errorText='請輸入收件人手機號碼'
+
+            }
+            else if(vm.email ==''){
+                errorText='請輸入電子信箱'
+            }
+
+            else if(vm.address =='' ){
+                errorText='請輸入完整收件地址'
+            }
+            if(errorText){
+                Swal.fire({
+                    icon: 'warning',
+                    text: errorText
+                })
+                vm.step=1 
+            }
+
+
+        // if(this.address =='' ||
+        //     this.name ==''||
+        //     this.phone ==''||
+        //     this.email ==''){
+        //         alert("資料不完全")
+        //         vm.step=1
+        //     }
+        }
+    }
   },
   created:function(){
      document.querySelector("#scrolldiv").addEventListener('scroll',(e)=>{
