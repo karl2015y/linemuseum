@@ -7,7 +7,7 @@
 </div>
 <div class="flex flex-col justify-between" style="height: calc(100% - 5rem);">
     <div class="px-4 pb-4">
-        <a href="{{route('MemberPayHistoryPage')}}">
+        <a class="hidden" href="{{route('MemberPayHistoryPage')}}">
             <div class="mt-4 text-center text-xl font-medium text-white"
                 style="max-height: 200px;height: 55vw;min-height: 176px;min-width: 288px;background-image: url(/asset/img/pay-point-card.jpg);background-size: contain;background-repeat: no-repeat;background-position: center;">
                 <div class="py-2">消費點</div>
